@@ -1,4 +1,4 @@
-# karClass
+# karaClass
 
  * Classes for  DUE project 
  * Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr http://www.karawin.fr
