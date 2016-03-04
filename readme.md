@@ -46,3 +46,5 @@
  IniFile.h<br/>
  DueTimer cannot live without it <br/>
 
+<img src="https://github.com/karawin/karaClass/blob/master/2016-03-04.10.52.02.jpg" alt="screenshot" border=0> 
+
