@@ -1,6 +1,8 @@
-/*
+# karaClass
+
  * Classes for  DUE project 
  * Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr http://www.karawin.fr
+ * https://github.com/karawin/karaClass
  * 
  * based on and require
  * ILI9341_due.h - Arduino Due library for interfacing with ILI9341-based TFTs
@@ -20,31 +22,29 @@
  * TScreen must be defined with your needs.
  * See examples folder
  * 
- */
+
  
  karaClass is a skeleton to build structured user screen on ILI9341 touch screen (around 6$ in china) for arduino due.
- Probably it can work on other boards like mega or teensy.
+ Probably it can work on other boards like mega or teensy.<br/>
  
- Defined main classes are:
- TScreen: the screen itself
- TPanels: a container of TPanel and TButtons
- TPanel:  the main part of the screen
- TButtons: a container of raw of TButtons.  displayed from bottom to top of TPanels
- TButton: a button
- TStBar: a panel at the top of the screen. It contains TStatus object.
+ Defined main classes are:<br/>
+ TScreen: the screen itself<br/>
+ TPanels: a container of TPanel and TButtons<br/>
+ TPanel:  the main part of the screen<br/>
+ TButtons: a container of raw of TButtons.  displayed from bottom to top of TPanels<br/>
+ TButton: a button<br/>
+ TStBar: a panel at the top of the screen. It contains TStatus object.<br/>
  
- A TButtons panel can be in group mode ie only all TButton are in toggle mode but only one can be On.
- A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.
+ A TButtons panel can be in group mode ie only all TButton are in toggle mode but only one can be On.<br/>
+ A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.<br/>
  
- See the example to show these elements in action.
- 
- The example needs additional libraries:
- // library
-#include <RTClib.h>  //
-#include <SdFat.h>
-#include <SdFatUtil.h>
-#include <IniFile.h>
-#include <DueTimer.h> // cannot live without it 
+ See the example to show these elements in action.<br/>
+ The example needs additional libraries:<br/>
+ RTClib<br/>
+ SdFat<br/>
+ SdFatUtil<br/>
+ IniFile.h<br/>
+ DueTimer cannot live without it <br/>
 
-#include <UTouch.h>
-#include "karaScreenConfig.h"
+<img src="https://github.com/karawin/karaClass/blob/master/2016-03-04.10.52.02.jpg" alt="screenshot" border=0> 
+
