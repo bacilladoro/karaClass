@@ -1,6 +1,6 @@
 
 
-/* A web radio receiver on wifi for arduino DUE board
+/* A pattern to devellop new project using karaclass
  *  
  *  Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr
  *  Pattern for end user
