@@ -47,4 +47,7 @@
  DueTimer cannot live without it <br/>
 
 <img src="https://github.com/karawin/karaClass/blob/master/2016-03-04.10.52.02.jpg" alt="screenshot" border=0> 
+<img src="https://github.com/karawin/karaClass/blob/master/IMG_20160305_144004.jpg" alt="screenshot" border=0> 
+
+
 
