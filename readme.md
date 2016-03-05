@@ -1,8 +1,8 @@
 # karaClass
 
- * Classes for  DUE project 
+ *  KaraClass A basic user environment for arduino touch screen 
  * Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr http://www.karawin.fr
- * https://github.com/karawin/karaClass
+ * Code: https://github.com/karawin/karaClass
  * 
  * based on and require
  * ILI9341_due.h - Arduino Due library for interfacing with ILI9341-based TFTs
@@ -34,6 +34,7 @@
  TButtons: a container of raw of TButtons.  displayed from bottom to top of TPanels<br/>
  TButton: a button<br/>
  TStBar: a panel at the top of the screen. It contains TStatus object.<br/>
+ TKeyboard: a complete qwerty keyboard<br/>
  
  A TButtons panel can be in group mode ie only all TButton are in toggle mode but only one can be On.<br/>
  A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.<br/>
