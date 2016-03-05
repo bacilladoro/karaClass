@@ -28,6 +28,16 @@
 #elif defined(ARDUINO_SAM_DUE)
     #define PROGMEM
 #endif
+// some trace if DEBUG = 1 else 0
+#define DEBUG 0
+#if DEBUG
+#include <stdio.h>
+#define dbgprint Serial.print
+#define dbgprintln Serial.println
+#else
+#define dbgprint(...) /**/  
+#define dbgprintln(...) /**/  
+#endif
 
 #include <ILI9341_due.h>
 #include "fonts\allFonts.h"
@@ -93,7 +103,7 @@ public:
   bool isArmed(){return trigger;}
 };
 //
-
+//An image for the logo or button
 class TLogo
 {
   public:
@@ -103,18 +113,19 @@ class TLogo
   uint16_t *Image ;
   TLogo( ILI9341_due* parent, uint16_t *image) { Parent = parent, Image = image;}
   TLogo( ILI9341_due* parent, const  uint16_t *image){Parent = parent; Image = (uint16_t*)image; }
-  void Background(uint16_t color);
-  void BackgroundWhite(uint16_t color);
-  void Draw( uint16_t x, uint16_t y);
+  void Background(uint16_t color); //if not in eprom, change the white color of the logo to color, for button use
+  void BackgroundWhite(uint16_t color); //revert to white the previously changed logo
+  void Draw( uint16_t x, uint16_t y);  // Draw it at x,y
 };
 //-------------------------------------------
 // Base class of  objects to be displayed
+// base data and method.
 class TBase
 {
 protected:
-  ILI9341_due* Parent; 
-  bool active = false;
-  bool displayed = false;
+  ILI9341_due* Parent; // the TScreen itself
+  bool active = false; // is or can be displayed
+  bool displayed = false; // is on screen. changed to true in Draw
 public:
   virtual void Touch(uint16_t xt, uint16_t yt) {;}
   virtual void unTouch(uint16_t xt, uint16_t yt){;}
@@ -127,32 +138,32 @@ public:
 };
 //
 //-------------------------------------------
-// a Button 
+// a Button to be contained in a TButtons panel
 class TButton: public TBase
 {
 public:
   TButton(ILI9341_due* parent,uint16_t left, uint16_t top, uint16_t width, uint16_t height);
   uint16_t Color ; // background color
-  String Caption;
-  TLogo *Logo = NULL;
-  TLogo *LogoOn = NULL;
-  bool BiStable = false;
-  bool State = false; // state for bistate
+  String Caption;  // The caption on the button
+  TLogo *Logo = NULL;     // a logo if needed
+  TLogo *LogoOn = NULL;   // a logo for bistable button in state = true
+  bool BiStable = false;  // if true, the button is a bistable
+  bool State = false;     // state for bistate
   void Draw(void);
-  void (*Action)(void) = NULL; 
+  void (*Action)(void) = NULL; // the external action to be called when pressed.
   void Touch(void);
   void unTouch(void) {Draw();}   
-  uint16_t Left; uint16_t Top; uint16_t Width; uint16_t Height;
+  uint16_t Left; uint16_t Top; uint16_t Width; uint16_t Height;  // position on screen (from constructor)
 };
 
 
 //-------------------------------------------
-//A mini keyboard panel of NRKEY*NRKBOARD keys and a String to show the Caption
+//A mini keyboard panel of NRKEY*NRKBOARD keys , a banner and a String to show the typing
 class TKeyboard: public TBase
 {
 private:
   uint16_t topa ; // top for all panel
-  uint16_t top; // top of the keyboard key
+  uint16_t top;   // top of the keyboard key
   bool state = false;
   uint16_t color = ILI9341_BLUE;
 public:
@@ -160,14 +171,14 @@ public:
   String Caption = ""; 
   String Banner = "";
   TButton* Key[NRKEY][NRKBOARD];
-  uint16_t btColor = ILI9341_GOLD;  
-  void setTop(uint16_t Top);
+  uint16_t btColor = ILI9341_GOLD;  // default color
+  void setTop(uint16_t Top);  // may be for a wider screen ;-)
   uint16_t getTop(){return topa;}
   void Touch(uint16_t xt, uint16_t yt);
   void unTouch(uint16_t xt, uint16_t yt);
   void Draw(void);
-  void Start(String banner, uint8_t set );
-  bool isAvailable(){return state;}
+  void Start(String banner, uint8_t set ); // Init the keyboard with banner and the set if any 
+  bool isAvailable(){return state;}  // A  String is ready
   void SetMn();
   void SetBase(); 
   void Set1();   
@@ -175,27 +186,26 @@ public:
   void Set3();   
 };
 //-------------------------------------------
-//A group of  nb button in a raw  at the bottom by default
+//A group of  nb button in a raw  (a panel) at the bottom by default
 // else call setTop
 class TButtons: public TBase
 {
 private:
   uint16_t   nb;
   uint16_t top ;
-  uint16_t eachwidth;
   uint16_t color = ILI9341_BLUE;
   bool grouped = false;
 public:
-  TButtons(ILI9341_due* parent,  uint16_t nbr);
+  TButtons(ILI9341_due* parent,  uint16_t nbr); // nbr = number of buttons in the panel. MAXBT maxi
   TButton* Button[MAXBT];
-  uint16_t btColor = ILI9341_GOLD;
-  String Caption;
+  uint16_t btColor = ILI9341_GOLD;  // default button  background color 
+//  String Caption;  // not used for now
   void setTop(uint16_t Top);
   uint16_t getTop(){return top;}
   void Touch(uint16_t xt, uint16_t yt);
   void unTouch(uint16_t xt, uint16_t yt); 
   void Draw(void);
-  void Grouped(bool state);  
+  void Grouped(bool state);  // if true, all buttons are bistable but only one is in state trus
 };
 //-------------------------------------------
 // Main Panel  of the screen
@@ -217,11 +227,11 @@ public:
   void Print(String str);// with scrolling
   void Draw(void);
   void Draw(uint16_t from,uint16_t until);
-  void Until(short unt){until = unt; }
-  void From(short fro){from= fro;} 
+  void Until(short unt){until = unt; }  // to display until the top of buttons panel if any
+  void From(short fro){from= fro;}      // to display from the bottom of  buttons panel if any
   void Touch(uint16_t xt, uint16_t yt){if (Action != 0) Action();} 
   void unTouch(uint16_t xt, uint16_t yt){;} 
-  void (*Action)(void) = NULL; 
+  void (*Action)(void) = NULL; // external action on touch
 };
 
 //-------------------------------------------
@@ -234,7 +244,7 @@ public:
   bool Active = true;
   TButtons* Bts[MAXBTS]; // the set of buttons panels
   TKeyboard* Keyboard = NULL;  // created if needed
-  TPanel* Panel = 0;
+  TPanel* Panel = 0; 
   void Touch(uint16_t xt, uint16_t yt);
   void unTouch(uint16_t xt, uint16_t yt);
   void Draw();
@@ -247,14 +257,14 @@ public:
 class TStatus
 {
   private:
-  String label="";  // pruint16_t as "label: caption" at x left pixel
+  String label="";  // printed_t as "label: caption" at x left pixel
   String caption="";
-  uint16_t at;
+  uint16_t at;  // position
   uint16_t color = ILI9341_LIGHTSTEELBLUE;
  ILI9341_due* Parent; 
 public:
   TStatus(ILI9341_due* parent,String lab,String capt, uint16_t x)  {Parent = parent; label = lab; caption = capt; at = x; }
-  bool State = false;
+  bool State = false;  // if true, the color is changed in green else it is red
   void Caption(char* cap){caption=cap;Modified = true;}
   void Label(char* cap){label=cap; Modified = true;}
   void Color(uint16_t col){ color = col;}
@@ -262,7 +272,7 @@ public:
   uint16_t At(){ return at;}
   void At(uint16_t here){ at = here;}
   uint16_t Width(); 
-  bool Modified = false;
+  bool Modified = false; // true if label or caption is changed externally (interrupt...)
 };
 
 //-------------------------------------------
@@ -282,7 +292,7 @@ public:
   TStatus *Status[MAXSTATUS];
   // some status to display
   void Draw();
-  void Refresh(); // some displays to update?
+  void Refresh(); // some display to update if modified?
 };
 
 

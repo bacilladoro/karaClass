@@ -3,6 +3,7 @@
 /* A web radio receiver on wifi for arduino DUE board
  *  
  *  Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr
+ *  Pattern for end user
  */
 
 // library
@@ -54,33 +55,8 @@ void setup() {
 // MODIFY//////////////////////////////
 // Pre display some Welcome messages.
   myScreen.Welcome(); // pre init myScreen to display the welcome
-  myScreen.printAt("Web Radio by KaraWin", 30,90);
   myScreen.printAt("Free memory: ", 30,110);
   myScreen.println(String(FreeRam(),DEC).c_str());
-  myScreen.printAt("WIFI version: ",30,130);
-//  myScreen.println(myWifi.GetVersion());
-
-// Check the sd card to read the external init configuration  
-  if (!SD.begin(SD_CS, SD_SPI_SPEED)){
-    Serial.println(PSTR(" SD failed!"));}
-  else
-  {
-    IniFile ini("webradio.ini");
-    if (!ini.open()) {
-    Serial.println("Ini file webradio.ini does not exist");
-    } else
-    {
-      Serial.println("Ini file exists");
-      ini.getValue("NETWORK","SSID",buffer,sizeof(buffer));
-      SSID = buffer; Serial.println(SSID);
-      ini.getValue("NETWORK","PASSWORD",buffer,sizeof(buffer));
-      SSIDPASSWORD = buffer; Serial.println(SSIDPASSWORD);
-      ini.close();
-    }
-  }
-  
-//    myWifi.SetWIFIMode(3);
-//    myWifi.SetJoinAP(SSID,SSIDPASSWORD);
   delay(1000); // Welcome show timer
 /// END MODIFY
 
