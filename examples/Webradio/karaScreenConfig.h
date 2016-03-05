@@ -1,7 +1,8 @@
 /* Demo for
- * karaClass, Classes for  DUE project 
+ * KaraClass A basic user environment for arduino touch screen 
  * Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr http://www.karawin.fr
  * 
+ * https://github.com/karawin/karaClass
  * 
  * KaraClass is a partial class:
  * TScreen must be defined with your needs.
@@ -18,8 +19,9 @@
 #elif defined(ARDUINO_SAM_DUE)
     #define PROGMEM
 #endif
+#include <RTClib.h>
 // the library base
-#include <karaScreen.h>
+#include "karaScreen.h"
 // Images for the demo
 #include "karawin.h"
 
@@ -41,9 +43,10 @@ public:
   void Welcome(void);// light init
   void Task(void); // things to do in the main loop. Compute touch, refresh childs etc...
   void Draw(void);  
-  void Touch(int xt, int yt);   
-  void unTouch(int xt, int yt);
-  int Color = ILI9341_DARKBLUE; 
+  void Touch(uint16_t xt, uint16_t yt);   
+  void unTouch(uint16_t xt, uint16_t yt);
+  uint16_t Color = ILI9341_DARKBLUE; 
+  String Keyboard(String banner, uint8_t set);
   void Println(char* str)  {Panels->Panel->Println(str);} // with scrolling
   void Println(String str) {Panels->Panel->Println(str);}// with scrolling
   void Print(char* str)  {Panels->Panel->Print(str);} // with scrolling
@@ -61,11 +64,13 @@ public:
 //Actions
 extern TScreen myScreen;  
   void APanel(void);
-  void ABts1_4(void);
-  void ABts1_3(void);
-  void ABts4_0(void);
-  void ABts4_1(void);
-  void ABts4_2(void);  
+  void ABts0_4(void);
+  void ABts0_3(void);
+  void ABts2_0(void);
+  void ABts2_2(void);
+  void ABts3_0(void);
+  void ABts3_1(void);
+  void ABts3_2(void);  
 ///////////////////////////////////////////////////////////   
   
 void TScreen::Welcome()
@@ -110,9 +115,12 @@ void TScreen::Begin()
   StatusBar->Status[2]= new TStatus(this,"","SD",210);
   StatusBar->Status[3]= new TStatus(this," ","0",135);
 
+  // Keyboard is dynamically allocated when needed
+  //Panels->Keyboard = new TKeyboard(this);
+
   Panels->Bts[0] = new TButtons(this,5);
   Panels->Bts[1] = new TButtons(this,3);
-  Panels->Bts[2] = new TButtons(this,4);
+  Panels->Bts[2] = new TButtons(this,3);
   Panels->Bts[3] = new TButtons(this,3);
   Panels->Bts[4] = new TButtons(this,4);
   // position
@@ -140,8 +148,8 @@ void TScreen::Begin()
   Panels->Bts[0]->Button[4]->Logo = new TLogo(this,wrsettingsm);
   Panels->Bts[0]->Button[4]->Logo->Width = wrsettingsmWidth; 
   // actions
-  Panels->Bts[0]->Button[4]->Action = ABts1_4;
-  Panels->Bts[0]->Button[3]->Action = ABts1_3;
+  Panels->Bts[0]->Button[4]->Action = ABts0_4;
+  Panels->Bts[0]->Button[3]->Action = ABts0_3;
 
   Panels->Bts[0]->Button[2]->BiStable = true; // a toggle button
    
@@ -158,19 +166,20 @@ void TScreen::Begin()
   Panels->Bts[1]->Button[2]->LogoOn->Height = wrledonHeight;
   
   Panels->Bts[2]->btColor = ILI9341_LIGHTSALMON;
-  Panels->Bts[2]->Button[0]->Caption = PSTR("Bass -");
-  Panels->Bts[2]->Button[1]->Caption = PSTR("Bass +");
-  Panels->Bts[2]->Button[2]->Caption = PSTR("Treble -");
-  Panels->Bts[2]->Button[3]->Caption = PSTR("Treble +");
-
+  Panels->Bts[2]->Button[0]->Caption = PSTR("SSID");
+  Panels->Bts[2]->Button[0]->Action = ABts2_0;
+  Panels->Bts[2]->Button[1]->Caption = PSTR("Password");
+  Panels->Bts[2]->Button[1]->Action = ABts2_0;
+  Panels->Bts[2]->Button[2]->Caption = PSTR("Time");
+  Panels->Bts[2]->Button[2]->Action = ABts2_2;
   
   Panels->Bts[3]->btColor = ILI9341_LIGHTBLUE;
   Panels->Bts[3]->Button[2]->Caption = PSTR("Usb OTG");
   Panels->Bts[3]->Button[1]->Caption = PSTR("Sd card");
   Panels->Bts[3]->Button[0]->Caption = PSTR("Web Radio");
-  Panels->Bts[3]->Button[0]->Action =  ABts4_0;
-  Panels->Bts[3]->Button[1]->Action =  ABts4_1;
-  Panels->Bts[3]->Button[2]->Action =  ABts4_2;
+  Panels->Bts[3]->Button[0]->Action =  ABts3_0;
+  Panels->Bts[3]->Button[1]->Action =  ABts3_1;
+  Panels->Bts[3]->Button[2]->Action =  ABts3_2;
   
 //Activate and displscreen
   Show();
@@ -180,7 +189,6 @@ void TScreen::Begin()
 void TScreen::Task()
 {
    StatusBar->Refresh();
-   
    if (ETouch.isArmed())
    {
      Touch(ETouch.xt,ETouch.yt);
@@ -189,6 +197,13 @@ void TScreen::Task()
    {
      unTouch(EunTouch.xt,EunTouch.yt);
    }  
+}
+
+String TScreen::Keyboard(String banner, uint8_t set = KBMAJ )
+{
+  myScreen.Panels->StartKeyboard(banner,set);
+  while (!myScreen.Panels->isKeyboard()) myScreen.Task();
+  return myScreen.Panels->GetKeyboard();  
 }
 //  ---------------------TScreen--------------------------
 // must be modified depending of the screen configuration
@@ -204,17 +219,17 @@ void TScreen::Draw()
 }
 
 // touch screen detected
-void TScreen::Touch(int xt, int yt)
+void TScreen::Touch(uint16_t xt, uint16_t yt)
 {  
-   Panels->Touch(xt,yt);
 // unarm the trigger   
     ETouch.TrigOff();    
+   Panels->Touch(xt,yt);
 }
-void TScreen::unTouch(int xt, int yt)
+void TScreen::unTouch(uint16_t xt, uint16_t yt)
 { 
-   Panels->unTouch(xt,yt);
 // unarm the trigger   
    EunTouch.TrigOff();   
+   Panels->unTouch(xt,yt);
 }
 
 /*
@@ -240,9 +255,9 @@ myScreen.Panels->Draw();
 }
 
 // Action on Panels->Bts[0] button 4 touch
-void ABts1_4(void)
+void ABts0_4(void)
 {
-//    Serial.println(F("Action ABts1_4"));
+//    Serial.println(F("Action ABts0_4"));
 // hide/show (toggle) 
   if (
     (myScreen.Panels->Bts[3]->isActive())||
@@ -252,23 +267,24 @@ void ABts1_4(void)
       myScreen.Panels->Bts[4]->Hide();
 //      Draw();   
    }
-   if ((myScreen.Panels->Bts[1]->isActive()))
+   if ((myScreen.Panels->Bts[1]->isActive())&&(!myScreen.Panels->Bts[2]->isActive()))
    {
-      myScreen.Panels->Bts[1]->Hide();
+//      myScreen.Panels->Bts[1]->Hide();
       myScreen.Panels->Bts[2]->Show();
    }      
    else  
    if (myScreen.Panels->Bts[2]->isActive())
    {
      myScreen.Panels->Bts[2]->Hide();
+     myScreen.Panels->Bts[1]->Hide();
 //     Draw();   
    }
    else
    myScreen.Panels->Bts[1]->Show();  
  myScreen.Panels->Draw();    
 }
-// Action on Bts1 button 3
-void ABts1_3(void)
+// Action on Bts0 button 3
+void ABts0_3(void)
 {
     myScreen.Panels->Bts[1]->Hide();
     myScreen.Panels->Bts[2]->Hide();
@@ -284,16 +300,43 @@ void ABts1_3(void)
    }
  myScreen.Panels->Draw();    
 }
+
+void ABts2_0(void)
+{  
+  myScreen.Panels->Bts[2]->Hide();
+  myScreen.Println( "Received: "+ myScreen.Keyboard("Enter some text"));  //wait a sting from the keyboard and pruint16_t it
+  myScreen.Panels->Draw();
+}
+
+extern RTC_Millis rtc;
+void ABts2_2(void)
+{ 
+  DateTime dt0(rtc.now());
+  uint8_t hour;
+  uint8_t min;
+  String newtime = myScreen.Keyboard( "Enter HH:MM",KBNUM); 
+   myScreen.Println( "Waiting xx:xx ");
+  myScreen.Println( "Received: "+ newtime);  //wait a sting from the keyboard and pruint16_t it
+  myScreen.Panels->Draw();
+  if (sscanf(newtime.c_str(),"%2d:%2d",&hour,&min) ==2)
+  {
+    if ((hour < 24)&&(min < 60)) 
+    {
+      rtc.adjust(DateTime(dt0.year(),dt0.month(),dt0.day(),hour,min,0));
+    }
+  }
+  else myScreen.Println( "format Error");
+}
 // Action on Bts
-void ABts4_0(void)
+void ABts3_0(void)
 {
   myScreen.StatusBar->Status[0]->Caption("Web Radio");
 }
-void ABts4_1(void)
+void ABts3_1(void)
 {
   myScreen.StatusBar->Status[0]->Caption("SD card");
 }
-void ABts4_2(void)
+void ABts3_2(void)
 {
   myScreen.StatusBar->Status[0]->Caption("Usb OTG");
 }

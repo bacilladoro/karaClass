@@ -1,8 +1,6 @@
-# karaClass
-
+/*
  * Classes for  DUE project 
  * Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr http://www.karawin.fr
- * https://github.com/karawin/karClass
  * 
  * based on and require
  * ILI9341_due.h - Arduino Due library for interfacing with ILI9341-based TFTs
@@ -22,7 +20,7 @@
  * TScreen must be defined with your needs.
  * See examples folder
  * 
-
+ */
  
  karaClass is a skeleton to build structured user screen on ILI9341 touch screen (around 6$ in china) for arduino due.
  Probably it can work on other boards like mega or teensy.
@@ -39,10 +37,14 @@
  A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.
  
  See the example to show these elements in action.
+ 
  The example needs additional libraries:
- RTClib
- SdFat
- SdFatUtil
- IniFile.h
- DueTimer cannot live without it 
+ // library
+#include <RTClib.h>  //
+#include <SdFat.h>
+#include <SdFatUtil.h>
+#include <IniFile.h>
+#include <DueTimer.h> // cannot live without it 
 
+#include <UTouch.h>
+#include "karaScreenConfig.h"

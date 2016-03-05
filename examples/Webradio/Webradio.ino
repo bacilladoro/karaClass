@@ -59,7 +59,7 @@ RTC_Millis rtc;
 DateTime dt( F(__DATE__), F(__TIME__));
 
 
-int xt,yt;
+uint16_t xt,yt;
 // handler routine for timer1 to read the touch screen
 void myTouchInt()
 {
@@ -102,9 +102,9 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) ; // wait for Arduino Serial Monitor
   Serial.println(F("Web Radio")); 
-  
+  rtc.begin(dt);  
 //  myWifi.SoftReset();
-  rtc.begin(dt);
+
 // Pre display some Welcome messages.
   myScreen.Welcome(); // pre init myScreen to display the welcome
   myScreen.printAt("Web Radio by KaraWin", 30,90);
@@ -143,8 +143,8 @@ void setup() {
   // Initialize myScreen
   myScreen.Begin();
   delay(1000);  
-  myScreen.Panels->Panel->clearPanelLines();  
-  
+  myScreen.Panels->Panel->clearPanelLines();
+    
 // starts the interrupts  
   Timer1.attachInterrupt(myTouchInt);
   Timer1.start(TIMER1); 
@@ -154,7 +154,7 @@ void setup() {
   Timer3.start(TIMER3);  
 
 }
-int cnt = 0;
+uint16_t cnt = 0;
 String string;
 char charac[10];
 void loop() {
@@ -162,7 +162,7 @@ void loop() {
 while (true) { 
    myScreen.Task();// mandatory
 
-   if (cnt < 20)
+/*   if (cnt < 20)
    {
      string = cnt++;
      strcpy(charac,string.c_str());
@@ -172,8 +172,21 @@ while (true) {
      myScreen.Print("Touch the screen for buttons");
      myScreen.Println(" and features");
    }
-   if (cnt++ == 20)
+   if (cnt++ >= 20)
+   {
      myScreen.Println("1234567890123456789012345678901234567890123456789");
+
+     for (uint16_t i = 20;i< 200;i++)
+     {
+
+       for (uint16_t y=0x1111;y<0xFFFF;y++)
+       {
+         myScreen.Task();
+         myScreen.fillCircle(170, 120, i, 0xC718+y);
+         delay (1);
+       }
+     } 
+     }*/
 }
 }
 
