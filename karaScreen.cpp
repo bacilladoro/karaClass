@@ -90,7 +90,7 @@ void TButton::Draw(void)
 }
 
 void TButton::Touch()
-{  Serial.println("Buttons touch");
+{  dbgprintln("Buttons touch");
   if (!active) return;
   uint16_t idleColor = Color;
   Color = Color&0xA514;  // clear 343 less bits of the 565 color
@@ -201,7 +201,7 @@ void TKeyboard::setTop(uint16_t Top)
 }
 
 void TKeyboard::Draw(void)
-{  Serial.println("Keyboard draw");
+{  dbgprintln("Keyboard draw");
   if (!active) return;
   displayed = true;
   Parent->fillRect(0,topa,WIDTH,KHEIGHT+KCHEIGHT,color) ;
@@ -302,7 +302,7 @@ void TButtons::setTop(uint16_t Top)
 }
 
 void TButtons::Draw(void)
-{  Serial.println("Buttons draw");
+{  dbgprintln("Buttons draw");
   if (!active) return;
   displayed = true;
   Parent->fillRect(0,top,WIDTH,BHEIGHT,color) ;
@@ -410,7 +410,7 @@ void TPanel::clearPanel()
   Parent->fillRect(0,LHEIGHT,WIDTH,until,Color) ;
 }
 void TPanel::Draw(uint16_t from,uint16_t luntil)
-{  Serial.println("panel draw until");
+{  dbgprintln("panel draw until");
   if (!active) return;
   until = luntil;
   uint16_t hi = 5;
@@ -428,7 +428,7 @@ void TPanel::Draw(uint16_t from,uint16_t luntil)
 }
 
 void TPanel::Draw()
-{  Serial.println("panel draw");
+{  dbgprintln("panel draw");
   if (!active) return;
 //  Parent->fillRect(0,LHEIGHT,WIDTH,until,Color) ;
   Draw(from,until);  
@@ -443,7 +443,7 @@ TPanels::TPanels(ILI9341_due* parent)
 } 
 
 void TPanels::StartKeyboard(String banner, uint8_t set= KBMAJ)
-{  Serial.println("panels  startKeyboard");
+{  dbgprintln("panels  startKeyboard");
 // create Keyboard
   Keyboard = new TKeyboard(Parent);
 // invalidate other child
@@ -457,7 +457,7 @@ void TPanels::StartKeyboard(String banner, uint8_t set= KBMAJ)
 }
 
 String TPanels::GetKeyboard()
-{   Serial.println("panels GetKeyboard");
+{   dbgprintln("panels GetKeyboard");
 String Caption = Keyboard->Caption;
 // delete keyboard
    delete  Keyboard;
@@ -508,14 +508,14 @@ void TPanels::unTouch(uint16_t xt, uint16_t yt)
 }
 void TPanels::Draw()
 { 
-  Serial.println("panels show");
+  dbgprintln("panels show");
   uint16_t i;
   uint16_t unti= HEIGHT-LHEIGHT;
   if (!active) return;
   for (i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
     {  
-      Serial.print("Bts ");Serial.println(i); Serial.print("Active "); Serial.println(Bts[i]->isActive()?"1 ":"0 ");
+      dbgprint("Bts ");dbgprintln(i); dbgprint("Active "); dbgprintln(Bts[i]->isActive()?"1 ":"0 ");
       if (Bts[i]->isActive())
       {
         if (!Bts[i]->isDisplayed()) Bts[i]->Draw(); 
@@ -551,10 +551,10 @@ void TStatus::Draw()
 }
 uint16_t TStatus::Width() 
 { 
-/*  Serial.println(label+caption);
-  Serial.print("nb char :"); Serial.println(label.length()+caption.length());
-  Serial.print("Width :"); Serial.println((label.length()+caption.length())*Parent->getCharWidth('_'));
-  Serial.print("Width _:"); Serial.println(Parent->getCharWidth('_'));
+/*  dbgprintln(label+caption);
+  dbgprint("nb char :"); dbgprintln(label.length()+caption.length());
+  dbgprint("Width :"); dbgprintln((label.length()+caption.length())*Parent->getCharWidth('_'));
+  dbgprint("Width _:"); dbgprintln(Parent->getCharWidth('_'));
 */ 
   return ((label.length()+caption.length())*Parent->getCharWidth('_')); 
 } 
