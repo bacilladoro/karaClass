@@ -50,5 +50,6 @@
 <img src="https://github.com/karawin/karaClass/blob/master/2016-03-04.10.52.02.jpg" alt="screenshot" border=0> 
 <img src="https://github.com/karawin/karaClass/blob/master/IMG_20160305.jpg" alt="screenshot" border=0> 
 
-
+Video:<br/>
+<iframe width="420" height="315" src="https://www.youtube.com/embed/Zyi8rDFdiU4" frameborder="0" allowfullscreen></iframe>
 
