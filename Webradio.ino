@@ -1,6 +1,6 @@
 
 
-/* A pattern to devellop new project using karaclass
+/* A pattern to develop new project using karaclass
  *  
  *  Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr
  *  Pattern for end user
