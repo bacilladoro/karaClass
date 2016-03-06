@@ -38,7 +38,7 @@
 #define dbgprint(...) /**/  
 #define dbgprintln(...) /**/  
 #endif
-
+#include <ILI9341_due_config.h>
 #include <ILI9341_due.h>
 #include "fonts\allFonts.h"
 
@@ -49,9 +49,9 @@
 #define HEIGHT 240
 // space between group of buttons
 #define PAD 5
-// Height of a group of buttons
+// Height of a group of buttons TButtons
 #define BHEIGHT 68
-// Default keyboard to Majuscule, minuscule or numerique
+// Default keyboard to Majuscule 'upper case', minuscule 'lower case' or numerical
 #define KBMAJ 1
 #define KBMIN 3
 #define KBNUM 2
@@ -119,7 +119,7 @@ class TLogo
 };
 //-------------------------------------------
 // Base class of  objects to be displayed
-// base data and method.
+// base data and method common to childs.
 class TBase
 {
 protected:
@@ -138,7 +138,7 @@ public:
 };
 //
 //-------------------------------------------
-// a Button to be contained in a TButtons panel
+// a Button panel to be owned in a TButtons panel
 class TButton: public TBase
 {
 public:
@@ -158,7 +158,7 @@ public:
 
 
 //-------------------------------------------
-//A mini keyboard panel of NRKEY*NRKBOARD keys , a banner and a String to show the typing
+//A keyboard panel of NRKEY*NRKBOARD keys , a banner and a String to show the typing. Owned by TPanels
 class TKeyboard: public TBase
 {
 private:
@@ -186,8 +186,8 @@ public:
   void Set3();   
 };
 //-------------------------------------------
-//A group of  nb button in a raw  (a panel) at the bottom by default
-// else call setTop
+//A panel group of  nb button in a raw ) at the bottom by default
+// else call setTop. Owned by TPanels
 class TButtons: public TBase
 {
 private:
@@ -208,7 +208,7 @@ public:
   void Grouped(bool state);  // if true, all buttons are bistable but only one is in state trus
 };
 //-------------------------------------------
-// Main Panel  of the screen
+// Main Panel  of the screen. Owned by TPanels
 class TPanel: public TBase
 {
 private:
@@ -235,7 +235,7 @@ public:
 };
 
 //-------------------------------------------
-// A panel and Buttons container
+// A TKeyboard, Tpanel and TButtons container
 // 
 class TPanels: public TBase
 {
@@ -243,7 +243,7 @@ public:
   TPanels(ILI9341_due* parent);
   bool Active = true;
   TButtons* Bts[MAXBTS]; // the set of buttons panels
-  TKeyboard* Keyboard = NULL;  // created if needed
+  TKeyboard* Keyboard = NULL;  // created when needed
   TPanel* Panel = 0; 
   void Touch(uint16_t xt, uint16_t yt);
   void unTouch(uint16_t xt, uint16_t yt);

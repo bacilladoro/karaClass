@@ -8,13 +8,13 @@
  * TScreen must be defined with your needs.
  * See examples folder
  * 
- * Pattern for new project
  * TO adapt to your project, only regions between MODIFY and ENDMODIFY comments have to be adapted.
  */
 
 #ifdef __arm__
 #ifndef karaScreenConfig_h
 #define karaScreenConfig_h
+
 #include <DueTimer.h>
 #include <UTouch.h>
 
@@ -89,7 +89,13 @@ public:
 ///////////////////////////////////////////
 //Actions on panel and button
   void APanel(void);
-   
+  void ABts0_4(void);
+  void ABts0_3(void);
+  void ABts2_0(void);
+  void ABts2_2(void);
+  void ABts3_0(void);
+  void ABts3_1(void);
+  void ABts3_2(void);   
 //END MODIFY///////////////////////////////////////////////  
 
 // Minimal init in order to display the welcome message
@@ -124,6 +130,14 @@ void TScreen::Begin()
   Panels = new TPanels(this);
   Panels->Panel = new TPanel(this); 
   Panels->Panel->Line[0] = PSTR (String("First line"));
+  Panels->Panel->Line[1] = PSTR (String("Up to 12 lines"));
+  Panels->Panel->Line[2] = PSTR (String(""));
+  Panels->Panel->Line[3] = PSTR (String("This is a demo for karaClass library"));
+  Panels->Panel->Line[4] = PSTR (String("Based on a web radio project"));
+  Panels->Panel->Line[6] = PSTR (String("Touch the screen for buttons"));
+  Panels->Panel->Line[5] = PSTR (String("------------------------------------------"));
+  Panels->Panel->Line[7] = PSTR (String(""));
+  Panels->Panel->Line[8] = PSTR (String("=====================+================+=========+"));
 
   Panels->Panel->Action = APanel;
   
@@ -132,23 +146,76 @@ void TScreen::Begin()
 
   /* don't forget to create the childs*/
   StatusBar = new TStBar(this);
-//  StatusBar->Status[0]= new TStatus(this,"Src:  ","Web",10);
+  StatusBar->Status[0]= new TStatus(this,"Src:  ","Web",10);
+  StatusBar->Status[1]= new TStatus(this,"","WIFI",240); 
+  StatusBar->Status[2]= new TStatus(this,"","SD",210);
+  StatusBar->Status[3]= new TStatus(this," ","0",135);
 
   // Keyboard is dynamically allocated when needed
   //Panels->Keyboard = new TKeyboard(this);
 
-//  Panels->Bts[0] = new TButtons(this,5);
+  Panels->Bts[0] = new TButtons(this,5);
+  Panels->Bts[1] = new TButtons(this,3);
+  Panels->Bts[2] = new TButtons(this,3);
+  Panels->Bts[3] = new TButtons(this,3);
+  Panels->Bts[4] = new TButtons(this,4);
   // position
-//  Panels->Bts[0]->setTop(POSBTS1);
+  Panels->Bts[1]->setTop(POSBTS2);
+  Panels->Bts[2]->setTop(POSBTS3);
+  Panels->Bts[3]->setTop(POSBTS2);
+  Panels->Bts[3]->Grouped(true); 
   
-//  Panels->Bts[0]->Button[0]->Caption = PSTR("Prev");
-//images
-//  Panels->Bts[0]->Button[0]->Logo = new TLogo(this,wrbackm);
+  Panels->Bts[0]->Button[0]->Caption = PSTR("Prev");
+  Panels->Bts[0]->Button[1]->Caption = PSTR("Next");
+  Panels->Bts[0]->Button[2]->Caption = PSTR("Play");
+  Panels->Bts[0]->Button[3]->Caption = PSTR("Source");
+  Panels->Bts[0]->Button[4]->Caption = PSTR("Option");
+  //images
+  Panels->Bts[0]->Button[0]->Logo = new TLogo(this,wrbackm);
+  Panels->Bts[0]->Button[0]->Logo->Width = wrbackmWidth;
+  Panels->Bts[0]->Button[1]->Logo = new TLogo(this,wrnextm);
+  Panels->Bts[0]->Button[1]->Logo->Width = wrnextmWidth;
+  Panels->Bts[0]->Button[2]->Logo = new TLogo(this,wrplaym);
+  Panels->Bts[0]->Button[2]->Logo->Width = wrplaymWidth;
+  Panels->Bts[0]->Button[2]->LogoOn = new TLogo(this,wrpausem);
+  Panels->Bts[0]->Button[2]->LogoOn->Width = wrpausemWidth;
+  Panels->Bts[0]->Button[3]->Logo = new TLogo(this,wrsourcem);
+  Panels->Bts[0]->Button[3]->Logo->Width = wrsourcemWidth;
+  Panels->Bts[0]->Button[4]->Logo = new TLogo(this,wrsettingsm);
+  Panels->Bts[0]->Button[4]->Logo->Width = wrsettingsmWidth; 
   // actions
-//  Panels->Bts[0]->Button[4]->Action = ABts0_4;
+  Panels->Bts[0]->Button[4]->Action = ABts0_4;
+  Panels->Bts[0]->Button[3]->Action = ABts0_3;
 
-//  Panels->Bts[0]->Button[2]->BiStable = true; // a toggle button
+  Panels->Bts[0]->Button[2]->BiStable = true; // a toggle button
    
+  Panels->Bts[1]->btColor = ILI9341_GREENYELLOW;
+  Panels->Bts[1]->Button[0]->Caption = PSTR("Vol. -");
+  Panels->Bts[1]->Button[1]->Caption = PSTR("Vol. +");
+  Panels->Bts[1]->Button[2]->Caption = PSTR("Loudness");
+  Panels->Bts[1]->Button[2]->BiStable = true; // a toggle button
+  Panels->Bts[1]->Button[2]->Logo = new TLogo(this,wrledoff);
+  Panels->Bts[1]->Button[2]->Logo->Width = wrledoffWidth;
+  Panels->Bts[1]->Button[2]->Logo->Height = wrledoffHeight;
+  Panels->Bts[1]->Button[2]->LogoOn = new TLogo(this,wrledon);
+  Panels->Bts[1]->Button[2]->LogoOn->Width = wrledonWidth;
+  Panels->Bts[1]->Button[2]->LogoOn->Height = wrledonHeight;
+  
+  Panels->Bts[2]->btColor = ILI9341_LIGHTSALMON;
+  Panels->Bts[2]->Button[0]->Caption = PSTR("SSID");
+  Panels->Bts[2]->Button[0]->Action = ABts2_0;
+  Panels->Bts[2]->Button[1]->Caption = PSTR("Password");
+  Panels->Bts[2]->Button[1]->Action = ABts2_0;
+  Panels->Bts[2]->Button[2]->Caption = PSTR("Time");
+  Panels->Bts[2]->Button[2]->Action = ABts2_2;
+  
+  Panels->Bts[3]->btColor = ILI9341_LIGHTBLUE;
+  Panels->Bts[3]->Button[2]->Caption = PSTR("Usb OTG");
+  Panels->Bts[3]->Button[1]->Caption = PSTR("Sd card");
+  Panels->Bts[3]->Button[0]->Caption = PSTR("Web Radio");
+  Panels->Bts[3]->Button[0]->Action =  ABts3_0;
+  Panels->Bts[3]->Button[1]->Action =  ABts3_1;
+  Panels->Bts[3]->Button[2]->Action =  ABts3_2;
 ////END MODIFY//////////////////////////////////////////////
 // do not modify after  
 //Activate and displayscreen
@@ -202,7 +269,7 @@ void TScreen::Draw()
 void TScreen::Touch(uint16_t xt, uint16_t yt)
 {  
 // unarm the trigger   
-   ETouch.TrigOff();    
+    ETouch.TrigOff();    
    Panels->Touch(xt,yt);
 }
 void TScreen::unTouch(uint16_t xt, uint16_t yt)
@@ -234,6 +301,7 @@ void myTouchInt()
     } 
 }
 // compute the status bar
+extern SdFat SD;
 void StatInt()
 {
    bool st = SD.exists("webradio.ini");
@@ -246,8 +314,8 @@ String ci ;
 DateTime dt0(rtc.now());
   ci = dt0.hour() ;
   ci = ci  +":"+ dt0.minute() + ":" + dt0.second();
-/*  myScreen.StatusBar->Status[3]->Caption((char*)ci.c_str());
-  myScreen.StatusBar->Status[3]->Modified = true;*/
+  myScreen.StatusBar->Status[3]->Caption((char*)ci.c_str());
+  myScreen.StatusBar->Status[3]->Modified = true;
 }
 ///MODIFY///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -272,6 +340,93 @@ void  APanel(void)
     myScreen.Panels->Bts[0]->Show(); 
   } 
 myScreen.Panels->Draw(); 
+}
+
+// Action on Panels->Bts[0] button 4 touch
+void ABts0_4(void)
+{
+    dbgprintln(F("Action ABts0_4"));
+// hide/show (toggle) 
+  if (
+    (myScreen.Panels->Bts[3]->isActive())||
+    (myScreen.Panels->Bts[4]->isActive())  )
+   {
+      myScreen.Panels->Bts[3]->Hide();
+      myScreen.Panels->Bts[4]->Hide();
+//      Draw();   
+   }
+   if ((myScreen.Panels->Bts[1]->isActive())&&(!myScreen.Panels->Bts[2]->isActive()))
+   {
+//      myScreen.Panels->Bts[1]->Hide();
+      myScreen.Panels->Bts[2]->Show();
+   }      
+   else  
+   if (myScreen.Panels->Bts[2]->isActive())
+   {
+     myScreen.Panels->Bts[2]->Hide();
+     myScreen.Panels->Bts[1]->Hide();
+//     Draw();   
+   }
+   else
+   myScreen.Panels->Bts[1]->Show();  
+ myScreen.Panels->Draw();    
+}
+// Action on Bts0 button 3
+void ABts0_3(void)
+{
+    myScreen.Panels->Bts[1]->Hide();
+    myScreen.Panels->Bts[2]->Hide();
+    myScreen.Panels->Bts[4]->Hide();    
+   if (myScreen.Panels->Bts[3]->isActive())
+   {
+     myScreen.Panels->Bts[3]->Hide();    
+   }  
+   else
+   {
+     myScreen.Panels->Bts[3]->Show();
+
+   }
+ myScreen.Panels->Draw();    
+}
+
+void ABts2_0(void)
+{  
+  myScreen.Panels->Bts[2]->Hide();
+  myScreen.Println( "Received: "+ myScreen.Keyboard("Enter some text"));  //wait a sting from the keyboard and pruint16_t it
+  myScreen.Panels->Draw();
+}
+
+extern RTC_Millis rtc;
+void ABts2_2(void)
+{ 
+  DateTime dt0(rtc.now());
+  uint8_t hour;
+  uint8_t min;
+  String newtime = myScreen.Keyboard( "Enter HH:MM",KBNUM); 
+   myScreen.Println( "Waiting xx:xx ");
+  myScreen.Println( "Received: "+ newtime);  //wait a sting from the keyboard and pruint16_t it
+  myScreen.Panels->Draw();
+  if (sscanf(newtime.c_str(),"%2d:%2d",&hour,&min) ==2)
+  {
+    if ((hour < 24)&&(min < 60)) 
+    {
+      rtc.adjust(DateTime(dt0.year(),dt0.month(),dt0.day(),hour,min,0));
+    }
+  }
+  else myScreen.Println( "format Error");
+}
+// Action on Bts
+void ABts3_0(void)
+{
+  myScreen.StatusBar->Status[0]->Caption("Web Radio");
+}
+void ABts3_1(void)
+{
+  myScreen.StatusBar->Status[0]->Caption("SD card");
+}
+void ABts3_2(void)
+{
+  myScreen.StatusBar->Status[0]->Caption("Usb OTG");
 }
 
 

@@ -5,15 +5,23 @@
  *  Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr
  *  Pattern for end user
  */
-
 // library
+#include <Ethernet.h>
 #include <SdFat.h>
 #include <SdFatUtil.h>
 #include <IniFile.h>
+#include <ILI9341_due_config.h>
+#include <ILI9341_due.h>
+#include <SPI.h>
+#include <DueTimer.h>
+#include <UTouch.h>
+#include <Wire.h>
+#include <RTClib.h>
 
 //#include <ESP8266.h>
-
 #include "karaScreenConfig.h"
+#include "karaScreen.h"
+
 ///////////////////////////////////
 // hardware config:
 // For the TFT panel and associated touch panel, these are the default.
