@@ -1,6 +1,6 @@
 # karaClass
 
- *  KaraClass A basic user environment for arduino touch screen 
+ *  KaraClass A basic GUI graphical user interface environment for arduino touch screen 
  * Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr http://www.karawin.fr
  * Code: https://github.com/karawin/karaClass
  * 
