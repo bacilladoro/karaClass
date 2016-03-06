@@ -12,12 +12,12 @@ TLogo	KEYWORD1
 TPanel	KEYWORD1
 TButtons 	KEYWORD1
 TButton	KEYWORD1
-TPanels KEYWORD1
-TEvent KEYWORD1
-TEventScreen KEYWORD1
-TBase KEYWORD1
-TStatus KEYWORD1
-TStBar KEYWORD1
+TPanels	KEYWORD1
+TEvent	KEYWORD1
+TEventScreen	KEYWORD1
+TBase	KEYWORD1
+TStatus	KEYWORD1
+TStBar	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
@@ -26,7 +26,9 @@ TStBar KEYWORD1
 Task	KEYWORD2
 userTask	KEYWORD2
 Keyboard	KEYWORD2
-
+Begin	KEYWORD2
+Welcome	KEYWORD2
+Grouped	KEYWORD2
 
 #######################################
 # Constants (LITERAL1)
