@@ -51,12 +51,17 @@
  SdFatUtil<br/>
  IniFile.h<br/>
  DueTimer cannot live without it <br/>
-
+<br/>
 <img src="https://github.com/karawin/karaClass/blob/master/IMG_20160305_180548.jpg" alt="screenshot" border=0> 
+Panel of buttons. <br/>
 <img src="https://github.com/karawin/karaClass/blob/master/IMG_20160305.jpg" alt="screenshot" border=0> 
+Keyboard QWERTY<br/>
 <img src="https://github.com/karawin/karaClass/blob/master/2016-03-14 19.49.18.jpg" alt="screenshot" border=0> 
+Keyboard phone mode<br/>
 <img src="https://github.com/karawin/karaClass/blob/master/2016-03-14 19.49.43.jpg" alt="screenshot" border=0> 
+BigTime<br/>
 <img src="https://github.com/karawin/karaClass/blob/master/2016-03-14 19.50.13.jpg" alt="screenshot" border=0> 
+Radio buttons panel<br/>
 
 Video:<br/>
 https://www.youtube.com/watch?v=AUtO0maLCmw
