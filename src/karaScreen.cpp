@@ -19,9 +19,11 @@
  * See examples folder
  * No needs to modify this .cpp
  */
-
+#include <SdFat.h>
 #include "karaScreen.h"
-
+void setTime(void); //action
+void setDate(void); //action
+extern TScreen  myScreen;
 //  ----------TLogo------------------------------
 void TLogo::Background(uint16_t color)
 {
@@ -47,76 +49,190 @@ TButton::TButton(ILI9341_due* parent,uint16_t left, uint16_t top, uint16_t width
   Parent = parent;
   active = true; // show per default
   Left = left; Top = top; Width = width; Height = height;
+  Caption = "";
 }
 
 void TButton::Draw(void)
 {
+ dbgprintln("TButton Draw");
  uint16_t color = Color;
  if (!active) return;
  Parent->setFont(Arial_bold_14);
- if (State&&BiStable&&(LogoOn==NULL))
+ if (State&&CheckButton&&(LogoOn==NULL))
  {
-//      color = color&0x7BEF;
-      color = color&0xC618;
+      color = color&0xC618; // draw background more darker
  }
- Parent->drawRoundRect(Left+1,Top+PAD+2,Width,Height-(2*PAD),7,color&0xA514);
- Parent->fillRoundRect(Left,Top+PAD,Width,Height-(2*PAD),7,color);
- 
- Parent->drawRoundRect(Left,Top+PAD,Width,Height-(2*PAD),7,0);
+ Parent->drawRoundRect(Left+1,Top+PAD+2,Width,Height-(2*PAD),7,color&0xA514); //shadow of the button
+ Parent->fillRoundRect(Left,Top+PAD,Width,Height-(2*PAD),7,color); // clear space under button
+ Parent->drawRoundRect(Left,Top+PAD,Width,Height-(2*PAD),7,0); //Draw the conturn
  Parent->setTextArea(Left,Top+PAD,Width,Height-(2*PAD));
  Parent->setTextColor(ILI9341_NAVY,Color);
- if (Logo != 0) 
+
+ dbgprint("TButton Draw2 Logo= ");
+ dbgprint((int)Logo);dbgprint("  LogoOn= ");
+ dbgprintln((int)LogoOn);
+
+ if ((Logo != NULL) || (LogoOn != NULL))
  {
     // replace white with current color
-    Logo->Background(color);
-    if (LogoOn != NULL)  LogoOn->Background(color);
-    if (State&&BiStable)
+    if (Logo != NULL) Logo->Background(color);
+    if (LogoOn != NULL)  LogoOn->Background(color); // replace white with color in logoOn too
+
+    if (State&&CheckButton)
     {
       if (LogoOn != NULL)
            LogoOn->Draw(Left+((Width - LogoOn->Width)/2) , Top+(2*PAD));
-      else Logo->Draw(Left+((Width - Logo->Width)/2) , Top+2*PAD);
+      else 
+	  if (Logo != NULL)
+	       Logo->Draw(Left+((Width - Logo->Width)/2) , Top+2*PAD);
     }
     else
-      Logo->Draw(Left+((Width - Logo->Width)/2) , Top+3*PAD);
-      
-    Logo->BackgroundWhite(color);
-    if (LogoOn != NULL)  LogoOn->Background(color);
+	{
+      if (Logo != NULL) Logo->Draw(Left+((Width - Logo->Width)/2) , Top+2*PAD);
+    }
+    if (Logo != NULL)    Logo->BackgroundWhite(color); //restore logo from color to white
+    if (LogoOn != NULL)  LogoOn->BackgroundWhite(color);
 
     Parent->printAt(Caption,(Width -(Parent->getCharWidth('_')*(Caption.length())) )/2,Height-30);
  } else
+ if (CheckButton) // a CheckButton without Logo
+ {
+ // draw the check box
+    if (!State)
+	{
+	   if (Radio)
+	     Parent->fillCircle(Left+(Width/2) , Top+(Height/3),Height/7,ILI9341_WHITESMOKE) ;
+	   else
+	     Parent->fillRect(Left+((Width - (Width/5))/2) , Top+(Height/4),Width/5,Height/5,ILI9341_WHITESMOKE) ;
+       Parent->printAt(Caption,(Width -(Parent->getCharWidth('_')*(Caption.length())) )/2,Height-30);
+	} else
+	{
+	   if (Radio)
+	   Parent->fillCircle(Left+(Width/2) , Top+(Height/3),Height/7,ILI9341_RED) ;
+	   else
+	   Parent->fillRect(Left+((Width - (Width/5))/2) , Top+(Height/4),Width/5,Height/5,ILI9341_RED) ;
+       Parent->printAt(Caption,(Width -(Parent->getCharWidth('_')*(Caption.length())) )/2,Height-30);
+	}
+	if (Radio)
+	  Parent->drawCircle(Left+(Width/2) , Top+(Height/3) ,Height/7,ILI9341_BLACK);
+    else
+	  Parent->drawRect(Left+((Width - (Width/5))/2) , Top+(Height/4) ,Width/5,Height/5,ILI9341_BLACK);
+
+ } else  // nothing special. draw text
  {
  Parent->printAt(Caption,(Width -(Parent->getCharWidth('_')*(Caption.length())) )/2,9*Height/32);
  }
 }
 
 void TButton::Touch()
-{  dbgprintln("Buttons touch");
+{  dbgprintln("TButton Touch");
   if (!active) return;
   uint16_t idleColor = Color;
   Color = Color&0xA514;  // clear 343 less bits of the 565 color
-  if (BiStable)
+  if (CheckButton)
   {
       State = !State; // toggle
   }
   Draw();
   Color = idleColor;
-  if (Action != NULL) Action();
+  if (onTouch != NULL) onTouch();
+}
+void TButton::unTouch(void)
+{
+  dbgprintln("TButton unTouch");
+  Draw();
+  if (onUnTouch != NULL) onUnTouch();
+}
+   
+//-------TBigTime---------------------------
+TBigTime::TBigTime(ILI9341_due* parent): Options(parent,2)
+{
+  dbgprintln("TBigTime");
+  top = LHEIGHT;
+  Parent = parent;
+  Options.Button[0]->Caption = "Set Date";
+  Options.Button[1]->Caption = "Set Time";
+  Options.Button[1]->onUnTouch = setTime;
+  Options.Button[0]->onUnTouch = setDate;
 }
 
+void TBigTime::Draw()
+{
+//  dbgprintln("TBigTime draw");
+  char  ci[12] ;
+  if (!active) return;
+  if (!isDisplayed())
+  {
+    Parent->fillRect(0,top,WIDTH,HEIGHT-LHEIGHT,color) ;
+    Parent->drawRect(0,top,WIDTH,HEIGHT-LHEIGHT,ILI9341_WHITE) ;
+	displayed = true;
+//	return;
+  }
+  DateTime dt0(rtc.now());
+
+  Parent->setTextColor(ILI9341_WHITE);
+  Parent->setFont(fixednums15x31);
+  Parent->setTextArea(0, 0, WIDTH, HEIGHT);
+  sprintf(ci,"%02d:%02d:%02d", dt0.hour(),dt0.minute(),dt0.second());
+  Parent->fillRect  (WIDTH/2 -((fixednums15x31[2]*strlen(ci))/2 ),HEIGHT/3,fixednums15x31[2]*(strlen(ci)+1),fixednums15x31[3],color) ;
+  Parent->printAt(ci,WIDTH/2 -((fixednums15x31[2]*strlen(ci))/2 ),HEIGHT/3);
+
+  Parent->setFont(Arial_bold_14);
+  sprintf(ci,"%02d/%02d/%04d", dt0.day(),dt0.month(),dt0.year()); 
+  Parent->fillRect  (WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 ),(HEIGHT/3) +50,Arial_bold_14[2]*(strlen(ci)+1),Arial_bold_14[3],color) ;
+  Parent->printAt(ci,WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 ),(HEIGHT/3) +50);
+}
+void TBigTime::Touch(uint16_t xt, uint16_t yt)
+{
+  dbgprintln("TBigTime Touch");
+  if ((Options.isActive()) && (yt >= Options.getTop()) && (yt <= Options.getTop()+BHEIGHT))
+  {
+	  Options.Touch(xt,yt);
+	  return;
+  }
+
+// else do nothing  
+}
+void TBigTime::unTouch(uint16_t xt, uint16_t yt)
+{
+  dbgprintln("TBigTime unTouch");
+  if ((Options.isActive()) && (yt >= Options.getTop()) && (yt <= Options.getTop()+BHEIGHT))
+  {
+	  Options.unTouch(xt,yt);
+	  return;
+  }
+  if ((Options.isActive())&&(yt >=LHEIGHT ) && (yt <= HEIGHT-BHEIGHT))
+  {
+    Options.Hide();
+    unDisplay();
+    Draw();
+	return;
+   }
+  if ((yt >= HEIGHT-BHEIGHT) && (yt <= HEIGHT))
+  {
+	  Options.Show();
+	  Options.Draw();
+	  return;
+  }
+  else Hide();
+}
 // ------TPKeyboard-------------------------
 //
-TKeyboard::TKeyboard(ILI9341_due* parent)
+
+TKeyboard::TKeyboard(ILI9341_due* parent,uint8_t  nrky )
 {
- uint16_t bwidth;
+  dbgprintln("TKeyboard");
+  uint16_t bwidth;
   uint16_t bheight = KHEIGHT/NRKBOARD;
   uint16_t pad = 2;
   Parent = parent;
   top = HEIGHT - KHEIGHT;
   topa = top -KCHEIGHT; // for the caption
-  bwidth = (WIDTH - ((NRKEY+1)*pad))/NRKEY;
+  nrkey = nrky;
+  bwidth = (WIDTH - ((nrkey+1)*pad))/nrkey;
   for (uint16_t j=0 ; j<NRKBOARD; j++)
   {
-    for (uint16_t i=0 ; i<NRKEY; i++)
+    for (uint16_t i=0 ; i<nrkey; i++)
     {
       Key[i][j] = new TButton(Parent,
                          pad+(bwidth*i)+(pad*i),
@@ -126,17 +242,19 @@ TKeyboard::TKeyboard(ILI9341_due* parent)
       Key[i][j]->Color = btColor;           
     }
   }
-   Set1();
+   SetBase();
 }
 void TKeyboard::Start(String banner, uint8_t set= KBMAJ)
 {
+  dbgprintln("TKeyboard Start");
   state = false;
   Caption = "";
   Banner = banner;
   switch(set){
     case KBMAJ: Set1();break;
-    case KBMIN: Set3();break;
     case KBNUM: Set2();break;
+    case KBMIN: Set3();break;
+    case KBPHONE: Set4();break;
     default:break;
   }
 }
@@ -150,53 +268,64 @@ void TKeyboard::SetMn()
 
 void TKeyboard::SetBase()
 {
-  char white[] = "          ";
-  for (uint16_t i=0 ; i<NRKEY; i++)
-    Key[i][NRKBOARD-1]->Caption = white[i];  
-  Key[0][NRKBOARD-1]->Caption = "Mn"; // Majuscule/ Minuscule
-  Key[0][NRKBOARD-1]->Color &= 0xB618; // 
-  Key[1][NRKBOARD-1]->Caption = "01"; // Numbers
-  Key[1][NRKBOARD-1]->Color &= 0xB618; // 
-  Key[NRKEY-3][NRKBOARD-1]->Caption = "XX"; // Cancel
-  Key[NRKEY-1][NRKBOARD-1]->Caption = "OK"; // enter
-  Key[NRKEY-2][NRKBOARD-1]->Caption = "<<"; // erase
-  Key[NRKEY-1][NRKBOARD-1]->Color &=0xB618; // 
-  Key[NRKEY-2][NRKBOARD-1]->Color &=0xB618; // 
-  Key[NRKEY-3][NRKBOARD-1]->Color &=0xB618;
+  for (uint16_t i=0 ; i<nrkey; i++)
+    Key[i][NRKBOARD-1]->Caption = " ";  
+  if (nrkey == NRKEY)
+  {
+	  Key[0][NRKBOARD-1]->Caption = "Mn"; // Majuscule/ Minuscule
+	  Key[0][NRKBOARD-1]->Color &= 0xB618; //
+	  Key[1][NRKBOARD-1]->Caption = "01"; // Numbers
+	  Key[1][NRKBOARD-1]->Color &= 0xB618; //
+
+  } else
+  {
+      Key[0][NRKBOARD-1]->Hide();
+  }
+  Key[nrkey-3][NRKBOARD-1]->Caption = "XX"; // Cancel
+  Key[nrkey-1][NRKBOARD-1]->Caption = "OK"; // enter
+  Key[nrkey-2][NRKBOARD-1]->Caption = "<-"; // erase
+  Key[nrkey-1][NRKBOARD-1]->Color &=0xB618; //
+  Key[nrkey-2][NRKBOARD-1]->Color &=0xB618; //
+  Key[nrkey-3][NRKBOARD-1]->Color &=0xB618;
 }
 
 void TKeyboard::Set1()
 {
     char table[] = "QWERTYUIOPASDFGHJKL;ZXCVBNM,./";  
 //  char table[] = "AZERTYUIOPQSDFGHJKLMWXCVBN?./!";  
-  for (uint16_t j=0 ; j<NRKBOARD; j++)
-    for (uint16_t i=0 ; i<NRKEY; i++)
-      Key[i][j]->Caption = table[i+(NRKEY*j)]; 
-  SetBase();
+  for (uint16_t j=0 ; j<NRKBOARD-1; j++)
+    for (uint16_t i=0 ; i<nrkey; i++)
+      Key[i][j]->Caption = table[i+(nrkey*j)]; 
 }
 void TKeyboard::Set2()
 {
   char table[] = "1234567890@#$%&-+()*\"':;!?{}/\\"; 
   for (uint16_t j=0 ; j<NRKBOARD-1; j++)
-    for (uint16_t i=0 ; i<NRKEY; i++)
-      Key[i][j]->Caption = table[i+(NRKEY*j)];
-  SetBase(); 
+    for (uint16_t i=0 ; i<nrkey; i++)
+      Key[i][j]->Caption = table[i+(nrkey*j)];
 }
 void TKeyboard::Set3()
 {
     char table[] = "qwertyuiopasdfghjkl:zxcvbnm<>.";  
 //  char table[] = "azertyuiopqsdfghjklmwxcvbn,;:!";  
   for (uint16_t j=0 ; j<NRKBOARD-1; j++)
-    for (uint16_t i=0 ; i<NRKEY; i++)
-      Key[i][j]->Caption = table[i+(NRKEY*j)];
-  SetBase();
+    for (uint16_t i=0 ; i<nrkey; i++)
+      Key[i][j]->Caption = table[i+(nrkey*j)];
 }
+void TKeyboard::Set4()
+{
+    char table[] = "1234567890:/";
+    for (uint16_t j=0 ; j<NRKBOARD-1; j++)
+    for (uint16_t i=0 ; i<nrkey; i++)
+    Key[i][j]->Caption = table[i+(nrkey*j)];
+}
+
 void TKeyboard::setTop(uint16_t Top)
 {
   top = Top;
   topa = top - -KCHEIGHT; // for the caption
   for (uint16_t j=0 ; j<NRKBOARD-1; j++)  
-    for (uint16_t i=0 ; i<NRKEY; i++)  
+    for (uint16_t i=0 ; i<nrkey; i++)  
       Key[i][j]->Top = top; 
 }
 
@@ -208,15 +337,15 @@ void TKeyboard::Draw(void)
   Parent->drawRect(0,topa,WIDTH,KHEIGHT+KCHEIGHT,ILI9341_WHITE) ;
   Parent->setFont(Arial_bold_14);
   Parent->setTextColor(ILI9341_WHITE); 
-  Parent->setTextArea(KCHEIGHT,topa+1,WIDTH,KCHEIGHT/2); //Banner
+  Parent->setTextArea(KCHEIGHT,topa+2,WIDTH,KCHEIGHT/2); //Banner
   Parent->printAt(Banner,1, 4); 
-  Parent->setTextArea(KCHEIGHT,topa+(KCHEIGHT/2)+1,WIDTH-2*KCHEIGHT,KCHEIGHT/2); //Caption
-  Parent->fillRect(KCHEIGHT,topa+(KCHEIGHT/2)+1,WIDTH-2*KCHEIGHT,KCHEIGHT/2,ILI9341_WHITE) ; 
+  Parent->setTextArea(KCHEIGHT,topa+(KCHEIGHT/2)+3,WIDTH-2*KCHEIGHT,(KCHEIGHT/2)-6); //Caption
+  Parent->fillRect(KCHEIGHT,topa+(KCHEIGHT/2)+3,WIDTH-2*KCHEIGHT,(KCHEIGHT/2)-6,ILI9341_WHITE) ; 
   Parent->setTextColor(ILI9341_BLACK); 
   Parent->printAt(Caption,4, 4); 
   Parent->setTextColor(ILI9341_NAVY);  
   for (uint16_t j=0 ; j<NRKBOARD; j++)  
-    for (uint16_t i=0 ; i<NRKEY; i++)  
+    for (uint16_t i=0 ; i<nrkey; i++)  
       Key[i][j]->Draw();
 }
 
@@ -226,70 +355,76 @@ void TKeyboard::Touch(uint16_t xt, uint16_t yt)
   if (!active) return;
   for (uint16_t j=0 ; j<NRKBOARD; j++)  
   {
-    for (uint16_t i=0 ; i<NRKEY; i++)  
+    for (uint16_t i=0 ; i<nrkey; i++)  
     {
       if ((yt >= Key[i][j]->Top) && (yt <= Key[i][j]->Top + Key[i][j]->Height))
         if ((xt >= Key[i][j]->Left) && (xt <= Key[i][j]->Left + Key[i][j]->Width))
         {
-           Key[i][j]->Touch();
-           String caption = Key[i][j]->Caption;
-           if (Key[i][j]->Caption == "Mn"){ SetMn();Draw();}
-           else if (caption == "01"){ Set2();Draw();}
-           else if (caption == "<<"){ Caption.remove(Caption.length()-1);}
-           else if (caption == "OK"){ state = true;}
-           else if (caption == "XX"){ Caption ="";state = true;}
-           else Caption += caption;
-           break;      
+		  Key[i][j]->Touch();
+		  break;
         }
     }  
   }
-// redraw caption
-  Parent->setTextArea(KCHEIGHT,topa+(KCHEIGHT/2)+1,WIDTH-KCHEIGHT,KCHEIGHT/2); //Caption
-  Parent->fillRect(KCHEIGHT,topa+(KCHEIGHT/2)+1,WIDTH-2*KCHEIGHT,KCHEIGHT/2,ILI9341_WHITE) ; 
-  Parent->setFont(Arial_bold_14);
-  Parent->setTextColor(ILI9341_BLACK); 
-  Parent->printAt(Caption,4, 4);   
+ 
 }
 
 void TKeyboard::unTouch(uint16_t xt, uint16_t yt)
 {
   if (!active) return;
   for (uint16_t j=0 ; j<NRKBOARD; j++)  
-    for (uint16_t i=0 ; i<NRKEY; i++)  
+    for (uint16_t i=0 ; i<nrkey; i++)  
     {
       if ((yt >= Key[i][j]->Top) && (yt <= Key[i][j]->Top + Key[i][j]->Height))
-      if ((xt >= Key[i][j]->Left) && (xt <= Key[i][j]->Left + Key[i][j]->Width))
-      {
-         Key[i][j]->unTouch();
-         break;      
-      }    
+        if ((xt >= Key[i][j]->Left) && (xt <= Key[i][j]->Left + Key[i][j]->Width))
+        {
+           Key[i][j]->unTouch();
+           String caption = Key[i][j]->Caption;
+           if (Key[i][j]->Caption == "Mn"){ SetMn();Draw();}
+           else if (caption == "01"){ Set2();Draw();}
+           else if (caption == "<-"){ Caption.remove(Caption.length()-1);}
+           else if (caption == "OK"){ state = true;}
+           else if (caption == "XX"){ Caption ="";state = true;}
+           else Caption += caption;
+           break;
+        }    
     }
+// redraw caption
+  Parent->setTextArea(KCHEIGHT,topa+(KCHEIGHT/2)+1,WIDTH-KCHEIGHT,KCHEIGHT/2); //Caption
+  Parent->fillRect(KCHEIGHT,topa+(KCHEIGHT/2)+1,WIDTH-2*KCHEIGHT,KCHEIGHT/2,ILI9341_WHITE) ;
+  Parent->setFont(Arial_bold_14);
+  Parent->setTextColor(ILI9341_BLACK);
+  Parent->printAt(Caption,4, 4);
 }
 
 // ------TButtons--------------------------
-TButtons::TButtons(ILI9341_due* parent,  uint16_t nbr)
-{
-  uint16_t space,bwidth;
-  nb = nbr;
-  Parent = parent;
-  top = HEIGHT - BHEIGHT;
-  if (nb>MAXBT) nb=MAXBT;
-  space = nb+1;
-  bwidth = (WIDTH - (space*PAD))/nb;
-  for (uint16_t i=0 ; i<nb; i++)  
-    Button[i] = new TButton(Parent,PAD+(bwidth*i)+(PAD*i),
-                         top,
-                         bwidth,
-                         BHEIGHT);                   
-  for (uint16_t i=nb ; i<MAXBT; i++)  
-    Button[i] = NULL;                   
-}
-void TButtons::Grouped(bool state)
+  TButtons::TButtons(ILI9341_due* parent,  uint16_t nbr)
+  {
+	  uint16_t space,bwidth;
+	  nb = nbr;
+	  Parent = parent;
+	  top = HEIGHT - BHEIGHT;
+	  if (nb>MAXBT) nb=MAXBT;
+	  space = nb+1;
+	  bwidth = (WIDTH - (space*WPAD))/nb;
+	  for (uint16_t i=0 ; i<nb; i++)
+	  Button[i] = new TButton(Parent,WPAD+(bwidth*i)+(WPAD*i),
+	  top,
+	  bwidth,
+	  BHEIGHT);
+	  for (uint16_t i=nb ; i<MAXBT; i++)
+	  Button[i] = NULL;
+  } // nbr = number of buttons in the panel. MAXBT maxi
+
+void TButtons::RadioBox(bool state)
 {
   grouped = state;
   for (uint16_t i=0 ; i<nb; i++)  
   {
-     if (Button[i] != NULL) Button[i]->BiStable = grouped;
+     if (Button[i] != NULL) 
+	 {
+	   Button[i]->CheckButton = grouped;
+       Button[i]->Radio = true;
+     }
   }
 }
 void TButtons::setTop(uint16_t Top)
@@ -302,7 +437,7 @@ void TButtons::setTop(uint16_t Top)
 }
 
 void TButtons::Draw(void)
-{  dbgprintln("Buttons draw");
+{  dbgprint("Buttons draw top Height ");dbgprint(top); dbgprint(" ");dbgprintln(BHEIGHT);
   if (!active) return;
   displayed = true;
   Parent->fillRect(0,top,WIDTH,BHEIGHT,color) ;
@@ -364,6 +499,7 @@ void TButtons::unTouch(uint16_t xt, uint16_t yt)
 // ------TPanel------------
 void TPanel::clearPanelLines()
 {
+  dbgprintln("TPanel clearPanelLines");
   index = 0;
   for (uint16_t i = 0;i<MAXLINE;i++)
   {
@@ -372,8 +508,10 @@ void TPanel::clearPanelLines()
   Draw();
 }
 
+
 void TPanel::Print(String str)
 {
+  dbgprintln("TPanel Print");
   if (index >= MAXLINE) // scroll?
   {
     for (uint16_t i =1; i<MAXLINE; i++)
@@ -382,10 +520,11 @@ void TPanel::Print(String str)
     Line[index] ="";   
   }
   Line[index] = Line[index]+ str;
-  Draw();  
+//  Draw();  
 }
 void TPanel::Println(String str)
 {
+  dbgprintln("TPanel Println");
   if (index >= MAXLINE) // scroll?
   {
     for (uint16_t i =1; i<MAXLINE; i++)
@@ -397,42 +536,40 @@ void TPanel::Println(String str)
   index++;
   Draw();  
 }
-void TPanel::Print(char* str)
-{
-  Print((String) str);
-}
-void TPanel::Println(char* str)
-{
-Println((String) str);
-}
+void TPanel::Print(char* str){ Print((String) str);}
+
+void TPanel::Println(char* str){ Println((String) str);}
+
 void TPanel::clearPanel()
 {
   Parent->fillRect(0,LHEIGHT,WIDTH,until,Color) ;
 }
 void TPanel::Draw(uint16_t from,uint16_t luntil)
-{  dbgprintln("panel draw until");
+{  
+  dbgprint("TPanel draw from until "); dbgprint (from);  dbgprint ("  "); dbgprintln(luntil);
   if (!active) return;
   until = luntil;
-  uint16_t hi = 5;
-  Parent->setFont(Arial14);
-  Parent->fillRect(0,from,WIDTH,until,Color) ;
-  Parent->setTextArea(10, LHEIGHT, WIDTH-20, until);
+  uint16_t hi =Parent->getFontHeight();
+  Parent->setFont(myArial14);
+  Parent->fillRect(0,from,WIDTH,until-LHEIGHT,Color) ;
+  Parent->setTextArea(10, LHEIGHT, WIDTH-20, until-LHEIGHT);
   Parent->setTextColor(ILI9341_WHITE,Color);
   for (uint16_t i = 0;i<MAXLINE;i++)
   {
     //clipping
-    if (hi+5 > until) break;
+    if (hi > until-LHEIGHT-Parent->getFontHeight()) break;
     Parent->printAt(Line[i],10,hi);
     hi += Parent->getFontHeight()+LSPACE;
   }
 }
 
 void TPanel::Draw()
-{  dbgprintln("panel draw");
+{  dbgprintln("TPanel draw");
   if (!active) return;
 //  Parent->fillRect(0,LHEIGHT,WIDTH,until,Color) ;
   Draw(from,until);  
 }
+
 //  --------TPanels -------------------------
 TPanels::TPanels(ILI9341_due* parent)
 {
@@ -441,28 +578,50 @@ TPanels::TPanels(ILI9341_due* parent)
     for (uint16_t i = 0; i < MAXBTS; i++)
       Bts[i] = NULL;
 } 
-
+void TPanels::StartBigTime()
+{
+dbgprintln("startBigTime");
+  if (BigTime==NULL) 
+  {
+    BigTime = new TBigTime(Parent);
+    BigTime->Show();
+//  Draw(); 
+  } 
+}
+void TPanels::StopBigTime()
+{
+dbgprintln("stopBigTime");
+  if (BigTime!=NULL)
+  { 
+    BigTime->Hide();
+	delete BigTime ;
+	BigTime = NULL;
+  }
+  Draw();
+}
 void TPanels::StartKeyboard(String banner, uint8_t set= KBMAJ)
-{  dbgprintln("panels  startKeyboard");
+{  
+  dbgprintln("TPanels  startKeyboard");
 // create Keyboard
-  Keyboard = new TKeyboard(Parent);
+  if (set != KBPHONE)
+    Keyboard = new TKeyboard(Parent);
+  else 
+    Keyboard = new TKeyboard(Parent,4);
 // invalidate other child
-  for (uint16_t i = 0; i< MAXBTS; i++)
+/*  for (uint16_t i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
-      Bts[i]->Hide();
-    Panel->Hide();  
+      Bts[i]->Hide();*/
   Keyboard->Start(banner,set);
   Keyboard->Show();
   Keyboard->Draw();
 }
 
 String TPanels::GetKeyboard()
-{   dbgprintln("panels GetKeyboard");
+{   
+  dbgprintln("TPanels GetKeyboard");
 String Caption = Keyboard->Caption;
-// delete keyboard
    delete  Keyboard;
    Keyboard = NULL;
-  Panel->Show();
   Draw();
   return Caption;
 }
@@ -470,13 +629,22 @@ String Caption = Keyboard->Caption;
 void TPanels::Touch(uint16_t xt, uint16_t yt)
 {
   uint16_t i;
+  dbgprint("TPanels Touch yt= ");dbgprintln(yt);
+
+  if (BigTime!= NULL)
+    if ((BigTime->isActive()) && (yt >= LHEIGHT) && (yt <= HEIGHT)) //modal: the all screen
+    {
+	  BigTime->Touch(xt,yt);
+	  return;
+    }
 
   if (Keyboard!= NULL)
-      if ((Keyboard->isActive()) && (yt >= Keyboard->getTop()+KCHEIGHT) && (yt <= Keyboard->getTop()+KCHEIGHT+KHEIGHT)) 
+      if ((Keyboard->isActive()) && (yt >= LHEIGHT) && (yt <= HEIGHT)) //modal 
       { 
         Keyboard->Touch(xt,yt);
         return;
       }  
+
   for (i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
       if ((Bts[i]->isActive()) && (yt >= Bts[i]->getTop()) && (yt <= Bts[i]->getTop()+BHEIGHT)) 
@@ -490,8 +658,17 @@ void TPanels::Touch(uint16_t xt, uint16_t yt)
 void TPanels::unTouch(uint16_t xt, uint16_t yt)
 {
   uint16_t i;
+  dbgprintln("TPanels unTouch");
+  if (BigTime!= NULL)
+  if ((BigTime->isActive()) && (yt >= LHEIGHT) && (yt <= HEIGHT))
+  {
+	  BigTime->unTouch(xt,yt);
+	  if (!BigTime->isActive() ) StopBigTime();
+	  return;
+  }
+
   if (Keyboard!= NULL)
-      if ((Keyboard->isActive()) && (yt >= Keyboard->getTop()+KCHEIGHT) && (yt <= Keyboard->getTop()+KCHEIGHT+KHEIGHT)) 
+      if ((Keyboard->isActive()) && (yt >= LHEIGHT)  && (yt <= HEIGHT))
       { 
         Keyboard->unTouch(xt,yt);
         return;
@@ -508,19 +685,30 @@ void TPanels::unTouch(uint16_t xt, uint16_t yt)
 }
 void TPanels::Draw()
 { 
-  dbgprintln("panels show");
+  dbgprint(PSTR("TPanels Draw unti= "));dbgprintln(HEIGHT);
   uint16_t i;
-  uint16_t unti= HEIGHT-LHEIGHT;
+  uint16_t unti= HEIGHT;
   if (!active) return;
+
+  if (BigTime != NULL)
+  {
+//	  if (BigTime->isActive())
+	  {
+		  if (!BigTime->isDisplayed()) BigTime->Draw();
+		  return;
+	  }
+  }
   for (i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
     {  
-      dbgprint("Bts ");dbgprintln(i); dbgprint("Active "); dbgprintln(Bts[i]->isActive()?"1 ":"0 ");
+      dbgprint(PSTR("Bts "));dbgprint(i); dbgprint(PSTR("Active ")); dbgprintln(Bts[i]->isActive()?"1 ":"0 ");
       if (Bts[i]->isActive())
       {
-        if (!Bts[i]->isDisplayed()) Bts[i]->Draw(); 
-        if (unti > Bts[i]->getTop()-LHEIGHT)
-          unti = Bts[i]->getTop()-LHEIGHT;
+        if (!Bts[i]->isDisplayed()){ Bts[i]->Draw(); }
+		else { Bts[i]->reDraw();}
+        if (unti > Bts[i]->getTop())
+          unti = Bts[i]->getTop();
+		  dbgprint(PSTR("TPanels Draw unti= "));dbgprintln(unti);
       }
     }
   if (Keyboard != NULL)
@@ -528,8 +716,8 @@ void TPanels::Draw()
      if (Keyboard->isActive())
       {
         if (!Keyboard->isDisplayed()) Keyboard->Draw(); 
-        if (unti > Keyboard->getTop()-LHEIGHT)
-          unti =Keyboard->getTop()-LHEIGHT;
+        if (unti > Keyboard->getTop())
+          unti =Keyboard->getTop();
       }       
   }
 
@@ -538,6 +726,7 @@ void TPanels::Draw()
 //  -------TStatus--------------------------
 void TStatus::Draw()
 {
+//  dbgprintln("TStatus Draw");
   Modified = false;
   Parent->setTextColor(color);
   Parent->printAt(label,at,2); 
@@ -555,7 +744,7 @@ uint16_t TStatus::Width()
   dbgprint("nb char :"); dbgprintln(label.length()+caption.length());
   dbgprint("Width :"); dbgprintln((label.length()+caption.length())*Parent->getCharWidth('_'));
   dbgprint("Width _:"); dbgprintln(Parent->getCharWidth('_'));
-*/ 
+*/
   return ((label.length()+caption.length())*Parent->getCharWidth('_')); 
 } 
  
@@ -594,3 +783,64 @@ void TStBar::reDraw(uint16_t inde)
   if ((inde <MAXSTATUS)&&(Status[inde] != NULL)) Status[inde]->Draw();
 }
 
+
+void setTime(void)
+{ 
+  DateTime dt0(rtc.now());
+  
+  int hour;
+  int min;
+  int sec =0;
+  int res;
+  myScreen.Panels->BigTime->Hide();
+  String newtime = myScreen.Keyboard( PSTR("Enter HH:MM[:SS]"),KBPHONE); 
+  myScreen.Panels->BigTime->Show();
+/*  dbgprint(PSTR("Current time : Year: "));dbgprint(dt0.year());
+  dbgprint(PSTR(" Month: "));dbgprint(dt0.month());
+  dbgprint(PSTR(" Day: "));dbgprint(dt0.day());
+  dbgprint(PSTR(" Hour: "));dbgprint(dt0.hour());
+  dbgprint(PSTR(" Minute: "));dbgprint(dt0.minute());
+  dbgprint(PSTR(" Second: "));dbgprintln(dt0.second());*/
+  res = sscanf(newtime.c_str(),"%2u:%2u:%2u",&hour,&min,&sec) ;
+  if ((hour < 24)&&(min < 60)&&(sec<60))
+  {
+    if ((res == 3) || (res == 2))
+    {
+	  dbgprintln(PSTR("time 3: ")+newtime);
+      rtc.adjust(DateTime(dt0.year(),dt0.month(),dt0.day(),hour,min,sec));
+    }
+  }
+}
+
+void setDate(void)
+{
+	DateTime dt0(rtc.now());
+	int year;
+	int month;
+	int day;
+	int res;
+	myScreen.Panels->BigTime->Hide();
+	String newtime = myScreen.Keyboard( PSTR("Enter DD/MM[/YY]"),KBPHONE);
+	myScreen.Panels->BigTime->Show();
+/*  dbgprint("Current time : Year: ");dbgprint(dt0.year());
+  dbgprint(" Month: ");dbgprint(dt0.month());
+  dbgprint(" Day: ");dbgprint(dt0.day());
+  dbgprint(" Hour: ");dbgprint(dt0.hour());
+  dbgprint(" Minute: ");dbgprint(dt0.minute());
+  dbgprint(" Second: ");dbgprintln(dt0.second());*/
+  res = sscanf(newtime.c_str(),"%2u/%2u/%2u",&day,&month,&year);
+	if ((month < 13)&&(day<32))
+	{
+		if (res ==3)
+		{
+		    year +=2000;
+			dbgprint(PSTR("date 3: ")+newtime);dbgprint(PSTR("   Year "));dbgprint(year);dbgprint(PSTR("   Month "));dbgprint(month);dbgprint(PSTR("   Day "));dbgprintln(day);
+			rtc.adjust(DateTime(year,month,day,dt0.hour(),dt0.minute(),dt0.second()));
+		}
+		else if (res == 2)
+		{
+			dbgprint(PSTR("date 4: ")+newtime);dbgprint(PSTR("   Year "));dbgprint(dt0.year());dbgprint(PSTR("   Month "));dbgprint(month);dbgprint(PSTR("   Day "));dbgprintln(day);
+			rtc.adjust(DateTime(dt0.year(),month,day,dt0.hour(),dt0.minute(),dt0.second()));
+		}
+	}
+}

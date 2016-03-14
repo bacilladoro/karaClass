@@ -41,7 +41,7 @@ void TimeInt();
 // TIMER
 // timer interrupt for touch screen 100ms
 #define TIMER1 100000
-// for status bar refresh: 2 secondes
+// for status bar refresh: 2 seconds
 #define TIMER2 2000000
 // clock display  1 sec
 #define TIMER3 1000000
@@ -59,39 +59,13 @@ void ABts4_1(void);
 void ABts4_2(void);
 
 
-class TScreen :public ILI9341_due ,public TBase
-{
-public:
-  TScreen(uint8_t cs, uint8_t dc, uint8_t rst = 255):ILI9341_due(cs,  dc, rst ){;}
-  void Begin(void);                             // init me please
-  void Welcome(void);                           // light init for welcome message
-  void Task(void);                              // things to do in the main loop. Compute touch, refresh childs etc...
-  void userTask(void);                          // things to do in the main loop. User part defined in main ino
-  void Draw(void);                              // Draw the all screen 
-  void Touch(uint16_t xt, uint16_t yt);         //compute a touch event  from interrupt 
-  void unTouch(uint16_t xt, uint16_t yt);       //compute an untouch event
-  uint16_t Color = ILI9341_DARKBLUE;            // default screen background color
-  String Keyboard(String banner, uint8_t set);  // call a non blocking keyboard (Task() called inside)
-  void Println(char* str)  {Panels->Panel->Println(str);}  // with scrolling
-  void Println(String str) {Panels->Panel->Println(str);}  // with scrolling
-  void Print(char* str)  {Panels->Panel->Print(str);}      // with scrolling
-  void Print(String str) {Panels->Panel->Print(str);}      // with scrolling
-  TEventScreen ETouch;  // internal event to relay interrupt touch detection
-  TEventScreen EunTouch;// '' 
-  
-/////MODIFY/////////////////////////////////////////////  
-// lines after must be adapted to your project
-//Screen contains:
-  TLogo *Logo = NULL;
-  TPanels *Panels ; 
-  TStBar*  StatusBar;
-};
 ///////////////////////////////////////////
 //Actions on panel and button
   void APanel(void);
   void ABts0_4(void);
   void ABts0_3(void);
   void ABts2_0(void);
+  void ABts2_1(void);
   void ABts2_2(void);
   void ABts3_0(void);
   void ABts3_1(void);
@@ -104,6 +78,7 @@ void TScreen::Welcome()
 {
   ILI9341_due::begin();  // for Print
 // some default  
+  welcome = true;
   setRotation(iliRotation270);  // landscape
   fillScreen(ILI9341_DARKBLUE); 
   setFontMode(gTextFontModeTransparent);
@@ -113,6 +88,7 @@ void TScreen::Welcome()
 
 // from main ino
 extern TScreen  myScreen;
+extern ESP8266 myWifi;
 extern  UTouch myTouch;
 /////////////////////////////////////////////////////////
 // must be modified depending of the screen configuration
@@ -122,7 +98,7 @@ void TScreen::Begin()
   // Initialize the touch screen  
   myTouch.InitTouch();
   myTouch.setPrecision(PREC_MEDIUM);
-  Welcome();
+  if (!welcome) Welcome();
 
 //MODIFY///////////////////////////////////////////////   
 // To be modified for your project  
@@ -136,10 +112,8 @@ void TScreen::Begin()
   Panels->Panel->Line[4] = PSTR (String("Based on a web radio project"));
   Panels->Panel->Line[6] = PSTR (String("Touch the screen for buttons"));
   Panels->Panel->Line[5] = PSTR (String("------------------------------------------"));
-  Panels->Panel->Line[7] = PSTR (String(""));
-  Panels->Panel->Line[8] = PSTR (String("=====================+================+=========+"));
 
-  Panels->Panel->Action = APanel;
+  Panels->Panel->onTouch = APanel;
   
   Logo = new TLogo(this,karawin);
   Logo->Width = karawinWidth;
@@ -163,7 +137,7 @@ void TScreen::Begin()
   Panels->Bts[1]->setTop(POSBTS2);
   Panels->Bts[2]->setTop(POSBTS3);
   Panels->Bts[3]->setTop(POSBTS2);
-  Panels->Bts[3]->Grouped(true); 
+  Panels->Bts[3]->RadioBox(true); // a radiobox panel of buttons
   
   Panels->Bts[0]->Button[0]->Caption = PSTR("Prev");
   Panels->Bts[0]->Button[1]->Caption = PSTR("Next");
@@ -184,45 +158,39 @@ void TScreen::Begin()
   Panels->Bts[0]->Button[4]->Logo = new TLogo(this,wrsettingsm);
   Panels->Bts[0]->Button[4]->Logo->Width = wrsettingsmWidth; 
   // actions
-  Panels->Bts[0]->Button[4]->Action = ABts0_4;
-  Panels->Bts[0]->Button[3]->Action = ABts0_3;
+  Panels->Bts[0]->Button[4]->onTouch = ABts0_4;
+  Panels->Bts[0]->Button[3]->onTouch = ABts0_3;
 
-  Panels->Bts[0]->Button[2]->BiStable = true; // a toggle button
+  Panels->Bts[0]->Button[2]->CheckButton = true; // a toggle button
    
   Panels->Bts[1]->btColor = ILI9341_GREENYELLOW;
   Panels->Bts[1]->Button[0]->Caption = PSTR("Vol. -");
   Panels->Bts[1]->Button[1]->Caption = PSTR("Vol. +");
   Panels->Bts[1]->Button[2]->Caption = PSTR("Loudness");
-  Panels->Bts[1]->Button[2]->BiStable = true; // a toggle button
-  Panels->Bts[1]->Button[2]->Logo = new TLogo(this,wrledoff);
-  Panels->Bts[1]->Button[2]->Logo->Width = wrledoffWidth;
-  Panels->Bts[1]->Button[2]->Logo->Height = wrledoffHeight;
-  Panels->Bts[1]->Button[2]->LogoOn = new TLogo(this,wrledon);
-  Panels->Bts[1]->Button[2]->LogoOn->Width = wrledonWidth;
-  Panels->Bts[1]->Button[2]->LogoOn->Height = wrledonHeight;
+  Panels->Bts[1]->Button[2]->CheckButton = true; // a toggle button
   
   Panels->Bts[2]->btColor = ILI9341_LIGHTSALMON;
   Panels->Bts[2]->Button[0]->Caption = PSTR("SSID");
-  Panels->Bts[2]->Button[0]->Action = ABts2_0;
+  Panels->Bts[2]->Button[0]->onTouch = ABts2_0;
   Panels->Bts[2]->Button[1]->Caption = PSTR("Password");
-  Panels->Bts[2]->Button[1]->Action = ABts2_0;
+  Panels->Bts[2]->Button[1]->onTouch = ABts2_1;
   Panels->Bts[2]->Button[2]->Caption = PSTR("Time");
-  Panels->Bts[2]->Button[2]->Action = ABts2_2;
+  Panels->Bts[2]->Button[2]->onUnTouch = ABts2_2;
   
   Panels->Bts[3]->btColor = ILI9341_LIGHTBLUE;
   Panels->Bts[3]->Button[2]->Caption = PSTR("Usb OTG");
   Panels->Bts[3]->Button[1]->Caption = PSTR("Sd card");
   Panels->Bts[3]->Button[0]->Caption = PSTR("Web Radio");
-  Panels->Bts[3]->Button[0]->Action =  ABts3_0;
-  Panels->Bts[3]->Button[1]->Action =  ABts3_1;
-  Panels->Bts[3]->Button[2]->Action =  ABts3_2;
+  Panels->Bts[3]->Button[0]->onTouch =  ABts3_0;
+  Panels->Bts[3]->Button[1]->onTouch =  ABts3_1;
+  Panels->Bts[3]->Button[2]->onTouch =  ABts3_2;
 ////END MODIFY//////////////////////////////////////////////
 // do not modify after  
-//Activate and displayscreen
+//Activate and display screen
 // starts the interrupts  
-  DueTimer::getAvailable().attachInterrupt(myTouchInt).start(TIMER1);
-  DueTimer::getAvailable().attachInterrupt(StatInt).start(TIMER2);
-  DueTimer::getAvailable().attachInterrupt(TimeInt).start(TIMER3);;
+  DueTimer::getAvailable().attachInterrupt(myTouchInt).start(TIMER1);  // for touch / untouch
+  DueTimer::getAvailable().attachInterrupt(StatInt).start(TIMER2);     // for status bar computing
+  DueTimer::getAvailable().attachInterrupt(TimeInt).start(TIMER3);;    // for user task and time task
 
   Show();
   Draw();   
@@ -231,11 +199,15 @@ void TScreen::Begin()
 // The screen motor
 void TScreen::Task()
 {
-   StatusBar->Refresh();
-   if (ETouch.isArmed())
+   if (ETouch.isArmed())  // touch trigged in interrupt. Process it here in the main loop
      Touch(ETouch.xt,ETouch.yt);
    if (EunTouch.isArmed())
      unTouch(EunTouch.xt,EunTouch.yt);
+   if (ESecond.isArmed())
+     doSecond(DateTime (rtc.now()));;
+   if (EStatus.isArmed())
+     doStatus();
+   
      
 // call the user processing
    userTask();  
@@ -269,7 +241,8 @@ void TScreen::Draw()
 void TScreen::Touch(uint16_t xt, uint16_t yt)
 {  
 // unarm the trigger   
-    ETouch.TrigOff();    
+    ETouch.TrigOff(); 
+	screensaver = 0; // activity so reset screensaver   
    Panels->Touch(xt,yt);
 }
 void TScreen::unTouch(uint16_t xt, uint16_t yt)
@@ -278,6 +251,47 @@ void TScreen::unTouch(uint16_t xt, uint16_t yt)
    EunTouch.TrigOff();   
    Panels->unTouch(xt,yt);
 }
+// called every second. Add your own processing
+void TScreen::doSecond(DateTime dtime)
+{
+  ESecond.TrigOff();   
+  if (Panels->BigTime != NULL) 
+  {
+    if (Panels->BigTime->isActive())
+      Panels->BigTime->Draw();
+  }
+  
+//  dbgprint("screensaver: ");dbgprintln(screensaver);
+  if (screensaver == TSCREENSAVER)
+  {
+     screensaver++;
+	 dbgprintln("screensaver go");
+       Panels->StartBigTime();
+  } else   
+  if (screensaver != TSCREENSAVER+1) screensaver++;
+  userSecond(); // call the user part
+}
+void TScreen::doStatus()
+{
+//  dbgprintln("doStatus");
+  EStatus.TrigOff();
+  bool stori = myScreen.StatusBar->Status[2]->State;
+  bool st = SD.exists("webradio.ini");
+  myScreen.StatusBar->Status[2]->State = st;
+  if (st != stori)
+    myScreen.StatusBar->Status[2]->Modified = true;
+
+/*  stori = myScreen.StatusBar->Status[1]->State;
+  st =myScreen.StatusBar->Status[1]->State = myWifi.Test();
+  if (st != stori)
+    myScreen.StatusBar->Status[1]->Modified = true;*/
+
+  StatusBar->Refresh();
+}
+///MODIFY/////////////////////////////////////////
+
+
+////END MODIFY////////////////////////////////////
 
 
 ///////////////////////////////////////////////////////
@@ -302,20 +316,18 @@ void myTouchInt()
 }
 // compute the status bar
 extern SdFat SD;
+extern  ESP8266 myWifi;
 void StatInt()
 {
-   bool st = SD.exists("webradio.ini");
-  myScreen.StatusBar->Status[2]->State = st;
-  myScreen.StatusBar->Status[2]->Modified = true;
+  myScreen.EStatus.TrigOn();
 }
 void TimeInt()
 {  
-String ci ;
+char  ci[10] ;
 DateTime dt0(rtc.now());
-  ci = dt0.hour() ;
-  ci = ci  +":"+ dt0.minute() + ":" + dt0.second();
-  myScreen.StatusBar->Status[3]->Caption((char*)ci.c_str());
-  myScreen.StatusBar->Status[3]->Modified = true;
+  myScreen.ESecond.TrigOn();
+  sprintf(ci,"%02d:%02d:%02d", dt0.hour(),dt0.minute(),dt0.second());
+  myScreen.StatusBar->Status[3]->Caption(ci);
 }
 ///MODIFY///////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////
@@ -345,7 +357,7 @@ myScreen.Panels->Draw();
 // Action on Panels->Bts[0] button 4 touch
 void ABts0_4(void)
 {
-    dbgprintln(F("Action ABts0_4"));
+    dbgprintln(F("onTouch ABts0_4"));
 // hide/show (toggle) 
   if (
     (myScreen.Panels->Bts[3]->isActive())||
@@ -392,28 +404,22 @@ void ABts0_3(void)
 void ABts2_0(void)
 {  
   myScreen.Panels->Bts[2]->Hide();
-  myScreen.Println( "Received: "+ myScreen.Keyboard("Enter some text"));  //wait a sting from the keyboard and pruint16_t it
+  myScreen.clearCurrentLine();
+  myScreen.Println( "Received: "+ myScreen.Keyboard("Enter some text for SSID"));  //wait a sting from the keyboard and pruint16_t it
   myScreen.Panels->Draw();
+}
+void ABts2_1(void)
+{
+	myScreen.Panels->Bts[2]->Hide();
+	myScreen.clearCurrentLine();
+	myScreen.Println( "Received: "+ myScreen.Keyboard("Enter some text for Password"));  //wait a sting from the keyboard and pruint16_t it
+	myScreen.Panels->Draw();
 }
 
 extern RTC_Millis rtc;
 void ABts2_2(void)
 { 
-  DateTime dt0(rtc.now());
-  uint8_t hour;
-  uint8_t min;
-  String newtime = myScreen.Keyboard( "Enter HH:MM",KBNUM); 
-   myScreen.Println( "Waiting xx:xx ");
-  myScreen.Println( "Received: "+ newtime);  //wait a sting from the keyboard and pruint16_t it
-  myScreen.Panels->Draw();
-  if (sscanf(newtime.c_str(),"%2d:%2d",&hour,&min) ==2)
-  {
-    if ((hour < 24)&&(min < 60)) 
-    {
-      rtc.adjust(DateTime(dt0.year(),dt0.month(),dt0.day(),hour,min,0));
-    }
-  }
-  else myScreen.Println( "format Error");
+  myScreen.Panels->StartBigTime();
 }
 // Action on Bts
 void ABts3_0(void)

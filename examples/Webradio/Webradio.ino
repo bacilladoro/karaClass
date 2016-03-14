@@ -6,13 +6,23 @@
  */
 
 // library
+#include <Ethernet.h>
 #include <SdFat.h>
 #include <SdFatUtil.h>
 #include <IniFile.h>
+#include <ILI9341_due_config.h>
+#include <ILI9341_due.h>
+#include <SPI.h>
+#include <DueTimer.h>
+#include <UTouch.h>
+#include <Wire.h>
+#include <RTClib.h>
+#include "myArial14.h"
 
-//#include <ESP8266.h>
-
+#include <ESP8266.h>
 #include "karaScreenConfig.h"
+#include "karaScreen.h"
+
 ///////////////////////////////////
 // hardware config:
 // For the TFT panel and associated touch panel, these are the default.
@@ -35,21 +45,21 @@ const uint8_t SD_CS = 11;
 //ILI9341_due tft(TFT_CS, TFT_DC, TFT_RST);
 UTouch  myTouch(TFTT_CLK, TFTT_CS,TFTT_TDIN, TFTT_TDOUT, TFTT_IRQ);
 TScreen  myScreen(TFT_CS, TFT_DC, TFT_RST);
-//ESP8266 myWifi;
 SdFat SD;
 SdFile bmpFile; // set filesystem
 
 char buffer[254]; // general purpose buffer.
 String SSID;
 String SSIDPASSWORD;
-
+ ESP8266 myWifi;
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
+  Serial3.begin(115200);
   while (!Serial) ; // wait for Arduino Serial Monitor
   Serial.println(F("Web Radio")); 
   rtc.begin(dt);  
-//  myWifi.SoftReset();
+  static bool stwifi = myWifi.SoftReset();
 ///////////////////////////////////////
 // MODIFY//////////////////////////////
 // Pre display some Welcome messages.
@@ -57,9 +67,11 @@ void setup() {
   myScreen.printAt("Web Radio by KaraWin", 30,90);
   myScreen.printAt("Free memory: ", 30,110);
   myScreen.println(String(FreeRam(),DEC).c_str());
-  myScreen.printAt("WIFI version: ",30,130);
-//  myScreen.println(myWifi.GetVersion());
-
+  if (stwifi)
+  {
+    myScreen.printAt("WIFI version: ",30,130);
+    myScreen.println(myWifi.GetVersion());
+  }
 // Check the sd card to read the external init configuration  
   if (!SD.begin(SD_CS, SD_SPI_SPEED)){
     Serial.println(PSTR(" SD failed!"));}
@@ -78,14 +90,19 @@ void setup() {
       ini.close();
     }
   }
-  
-//    myWifi.SetWIFIMode(3);
-//    myWifi.SetJoinAP(SSID,SSIDPASSWORD);
-  delay(1000); // Welcome show timer
+    delay(2000); // Welcome show timer
+  // Initialize myScreen
+  myScreen.Begin();
+    
+    if (stwifi)
+	{
+      stwifi = myWifi.SetWIFIMode(3);
+      stwifi = myWifi.SetJoinAP(SSID,SSIDPASSWORD);
+    }
+
 /// END MODIFY
 
-  // Initialize myScreen
-  myScreen.Begin(); 
+
 }
 
 uint16_t cnt = 0;
@@ -102,6 +119,12 @@ void loop() {
 void TScreen::userTask()
 {
  ; 
+}
+// Called every second. Put your code here
+void TScreen::userSecond()
+{
+;
+
 }
 
 

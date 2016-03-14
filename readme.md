@@ -23,6 +23,8 @@
  * See examples folder
  * 
 
+ KARACLASS_VERSION 1.02
+ 
  
  karaClass is a skeleton to build structured user screen on ILI9341 touch screen (around 6$ in china) for arduino due.
  Probably it can work on other boards like mega or teensy.<br/>
@@ -35,6 +37,9 @@
  TButton: a button<br/>
  TStBar: a panel at the top of the screen. It contains TStatus object.<br/>
  TKeyboard: a complete qwerty keyboard<br/>
+ TBigTime: A panel displaying date and time
+ 
+ Added a screensaver timeout (BigTime after a minute of inactivity)
  
  A TButtons panel can be in group mode ie only all TButton are in toggle mode but only one can be On.<br/>
  A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.<br/>
