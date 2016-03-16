@@ -1,0 +1,1034 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.ARMGCC.CPP</ToolchainName>
+    <ProjectGuid>{11af1e65-0e4f-4580-82ec-4bf10ece8aa4}</ProjectGuid>
+    <avrdevice>ATSAM3X8E</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>Webradio</AssemblyName>
+    <Name>Webradio</Name>
+    <RootNamespace>Webradio</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress />
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue />
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.21.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../Webradio</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../Webradio</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize (-O1)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>%24(ProjectDir)\Device_Startup</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsam3x8e_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x;../../Webradio;C:/Users/jp/Documents/Arduino/libraries/DueTimer;C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility;C:/Program Files (x86)/Arduino/libraries/Ethernet/src;C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility;C:/Users/jp/Documents/Arduino/libraries/IniFile;C:/Users/jp/Documents/Arduino/libraries/IniFile/utility;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility;C:/Users/jp/Documents/Arduino/libraries/RTClib-master;C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility;C:/Users/jp/Documents/Arduino/libraries/SdFat;C:/Users/jp/Documents/Arduino/libraries/SdFat/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility;C:/Users/jp/Documents/Arduino/libraries/UTouch;C:/Users/jp/Documents/Arduino/libraries/UTouch/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility;C:/Program Files (x86)/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers;C:/Users/jp/Documents/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/;;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers/VM_DBG;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino/avr;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino/USB;C:/Users/jp/Documents/Arduino/libraries/ESP8266;C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility;C:/Users/jp/Documents/Arduino/loop;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/examples/Webradio;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/examples/demo;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <ValidatedAS7>1</ValidatedAS7>
+        <arduino.upload.port>COM5</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../Webradio</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/SdFat</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/IniFile</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries/Ethernet/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/ESP8266</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../Webradio</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize (-O1)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>%24(ProjectDir)\Device_Startup</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsam3x8e_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x;../../Webradio;C:/Users/jp/Documents/Arduino/libraries/DueTimer;C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility;C:/Program Files (x86)/Arduino/libraries/Ethernet/src;C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility;C:/Users/jp/Documents/Arduino/libraries/IniFile;C:/Users/jp/Documents/Arduino/libraries/IniFile/utility;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility;C:/Users/jp/Documents/Arduino/libraries/RTClib-master;C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility;C:/Users/jp/Documents/Arduino/libraries/SdFat;C:/Users/jp/Documents/Arduino/libraries/SdFat/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility;C:/Users/jp/Documents/Arduino/libraries/UTouch;C:/Users/jp/Documents/Arduino/libraries/UTouch/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility;C:/Program Files (x86)/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers;C:/Users/jp/Documents/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/;;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers/VM_DBG;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino/avr;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino/USB;C:/Users/jp/Documents/Arduino/libraries/ESP8266;C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility;C:/Users/jp/Documents/Arduino/loop;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/examples/Webradio;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/examples/demo;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings>
+        <ValidatedAS7>1</ValidatedAS7>
+        <arduino.upload.port>COM5</arduino.upload.port>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="Webradio.ino">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+    <Folder Include="src\_micro-api-readonly\" />
+    <Folder Include="src\_micro-api-readonly\core\" />
+    <Folder Include="src\_micro-api-readonly\core\avr\" />
+    <Folder Include="src\_micro-api-readonly\core\USB\" />
+    <Folder Include="src\_micro-api-readonly\libraries\" />
+    <Folder Include="src\_micro-api-readonly\libraries\DueTimer\" />
+    <Folder Include="src\_micro-api-readonly\libraries\Ethernet\" />
+    <Folder Include="src\_micro-api-readonly\libraries\Ethernet\src\" />
+    <Folder Include="src\_micro-api-readonly\libraries\Ethernet\src\utility\" />
+    <Folder Include="src\_micro-api-readonly\libraries\IniFile\" />
+    <Folder Include="src\_micro-api-readonly\libraries\karaClass-master\" />
+    <Folder Include="src\_micro-api-readonly\libraries\karaClass-master\src\" />
+    <Folder Include="src\_micro-api-readonly\libraries\marekburiakILI9341due\" />
+    <Folder Include="src\_micro-api-readonly\libraries\RTClib-master\" />
+    <Folder Include="src\_micro-api-readonly\libraries\SdFat\" />
+    <Folder Include="src\_micro-api-readonly\libraries\SdFat\utility\" />
+    <Folder Include="src\_micro-api-readonly\libraries\SPI\" />
+    <Folder Include="src\_micro-api-readonly\libraries\UTouch\" />
+    <Folder Include="src\_micro-api-readonly\libraries\Wire\" />
+    <Folder Include="src\_micro-api-readonly\variants\" />
+    <Folder Include="src\_micro-api-readonly\variants\arduino_due_x\" />
+    <Folder Include="__vm\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\Dhcp.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\Dhcp.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\Dhcp.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\Dhcp.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\Dns.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\Dns.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\Dns.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\Dns.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\Ethernet.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\Ethernet.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\Ethernet.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\Ethernet.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\EthernetClient.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\EthernetClient.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\EthernetClient.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\EthernetClient.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\EthernetServer.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\EthernetServer.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\EthernetServer.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\EthernetServer.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\EthernetUdp.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\EthernetUdp.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\EthernetUdp.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\EthernetUdp.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\utility\socket.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\utility\socket.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\utility\socket.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\utility\socket.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\utility\util.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\utility\util.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\utility\w5100.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\utility\w5100.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\..\..\Program Files %28x86%29\Arduino\libraries\Ethernet\src\utility\w5100.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Ethernet\src\utility\w5100.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\abi.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\abi.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Arduino.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Arduino.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\avr\dtostrf.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\avr\dtostrf.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\avr\dtostrf.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\avr\dtostrf.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\avr\interrupt.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\avr\interrupt.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\avr\pgmspace.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\avr\pgmspace.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\binary.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\binary.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Client.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Client.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\cortex_handlers.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\cortex_handlers.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\HardwareSerial.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\HardwareSerial.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\hooks.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\hooks.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\iar_calls_sam3.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\iar_calls_sam3.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\IPAddress.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\IPAddress.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\IPAddress.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\IPAddress.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\itoa.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\itoa.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\itoa.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\itoa.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\main.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\main.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\new.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\new.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Print.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Print.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Print.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Print.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Printable.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Printable.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Reset.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Reset.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Reset.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Reset.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\RingBuffer.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\RingBuffer.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\RingBuffer.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\RingBuffer.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Server.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Server.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Stream.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Stream.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Stream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Stream.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\syscalls.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\syscalls.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\syscalls_sam3.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\syscalls_sam3.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Tone.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Tone.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\UARTClass.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\UARTClass.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\UARTClass.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\UARTClass.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\Udp.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\Udp.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USARTClass.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USARTClass.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USARTClass.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USARTClass.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\CDC.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\CDC.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\PluggableUSB.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\PluggableUSB.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\PluggableUSB.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\PluggableUSB.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\USBAPI.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\USBAPI.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\USBCore.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\USBCore.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\USBCore.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\USBCore.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\USB\USBDesc.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\USB\USBDesc.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\watchdog.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\watchdog.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\watchdog.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\watchdog.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WCharacter.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WCharacter.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WInterrupts.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WInterrupts.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WInterrupts.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WInterrupts.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_analog.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_analog.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_analog.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_analog.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_constants.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_constants.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_digital.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_digital.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_digital.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_digital.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_private.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_private.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_pulse.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_pulse.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_pulse.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_pulse.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_pulse_asm.S">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_pulse_asm.S</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_shift.c">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_shift.c</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\wiring_shift.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\wiring_shift.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WMath.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WMath.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WMath.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WMath.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WString.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WString.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\cores\arduino\WString.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\core\WString.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\libraries\SPI\SPI.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SPI\SPI.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\libraries\SPI\SPI.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SPI\SPI.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\libraries\Wire\Wire.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Wire\Wire.cpp</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\libraries\Wire\Wire.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\Wire\Wire.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\variants\arduino_due_x\pins_arduino.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\variants\arduino_due_x\pins_arduino.h</Link>
+    </Compile>
+    <Compile Include="..\..\..\AppData\Local\arduino15\packages\arduino\hardware\sam\1.6.6\variants\arduino_due_x\variant.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\variants\arduino_due_x\variant.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\DueTimer\DueTimer.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\DueTimer\DueTimer.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\DueTimer\DueTimer.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\DueTimer\DueTimer.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\IniFile\IniFile.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\IniFile\IniFile.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\IniFile\IniFile.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\IniFile\IniFile.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\karaClass-master\src\karaScreen.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\karaClass-master\src\karaScreen.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\karaClass-master\src\karaScreen.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\karaClass-master\src\karaScreen.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\karaClass-master\src\karaScreenConfig.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\karaClass-master\src\karaScreenConfig.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\karaClass-master\src\karawin.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\karaClass-master\src\karawin.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\marekburiakILI9341due\ILI9341_due.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\marekburiakILI9341due\ILI9341_due.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\marekburiakILI9341due\ILI9341_due.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\marekburiakILI9341due\ILI9341_due.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\marekburiakILI9341due\ILI9341_due_config.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\marekburiakILI9341due\ILI9341_due_config.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\marekburiakILI9341due\SystemFont5x7.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\marekburiakILI9341due\SystemFont5x7.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\RTClib-master\RTClib.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\RTClib-master\RTClib.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\RTClib-master\RTClib.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\RTClib-master\RTClib.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\MinimumSerial.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\MinimumSerial.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\MinimumSerial.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\MinimumSerial.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdFat.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdFat.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdFatBase.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdFatBase.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdFatConfig.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdFatConfig.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdFatmainpage.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdFatmainpage.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdFatUtil.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdFatUtil.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdFatUtil.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdFatUtil.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdInfo.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdInfo.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdSpi.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdSpi.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdSpiCard.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdSpiCard.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdSpiCard.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdSpiCard.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdSpiSAM3X.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdSpiSAM3X.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdSpiSTM32F1.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdSpiSTM32F1.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdSpiTeensy3.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdSpiTeensy3.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\SdVolume.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\SdVolume.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\ArduinoFiles.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\ArduinoFiles.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\ArduinoStream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\ArduinoStream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\bufstream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\bufstream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\DigitalPin.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\DigitalPin.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatApiConstants.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatApiConstants.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatFile.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatFile.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatFile.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatFile.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatFileLFN.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatFileLFN.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatFilePrint.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatFilePrint.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatFileSFN.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatFileSFN.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatFileSystem.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatFileSystem.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatLib.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatLib.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatLibConfig.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatLibConfig.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatStructs.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatStructs.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatVolume.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatVolume.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FatVolume.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FatVolume.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FmtNumber.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FmtNumber.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\FmtNumber.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\FmtNumber.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\fstream.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\fstream.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\fstream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\fstream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\ios.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\ios.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\iostream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\iostream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\istream.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\istream.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\istream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\istream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\ostream.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\ostream.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\ostream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\ostream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\SoftSPI.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\SoftSPI.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\StdioStream.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\StdioStream.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\SdFat\utility\StdioStream.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\SdFat\utility\StdioStream.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\UTouch\UTouch.cpp">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\UTouch\UTouch.cpp</Link>
+    </Compile>
+    <Compile Include="..\libraries\UTouch\UTouch.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\UTouch\UTouch.h</Link>
+    </Compile>
+    <Compile Include="..\libraries\UTouch\UTouchCD.h">
+      <SubType>compile</SubType>
+      <Link>src\_micro-api-readonly\libraries\UTouch\UTouchCD.h</Link>
+    </Compile>
+    <Compile Include="karaScreen.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="karaScreen.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="karaScreenConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="karawin.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="__vm\.Webradio.vsarduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

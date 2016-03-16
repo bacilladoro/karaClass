@@ -1,0 +1,369 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectVersion>7.0</ProjectVersion>
+    <ToolchainName>com.Atmel.ARMGCC.CPP</ToolchainName>
+    <ProjectGuid>{3bed53a1-71bd-4fc0-a29f-0f56cded253d}</ProjectGuid>
+    <avrdevice>ATSAM3X8E</avrdevice>
+    <avrdeviceseries>none</avrdeviceseries>
+    <OutputType>Executable</OutputType>
+    <Language>CPP</Language>
+    <OutputFileName>$(MSBuildProjectName)</OutputFileName>
+    <OutputFileExtension>.elf</OutputFileExtension>
+    <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
+    <AssemblyName>demo</AssemblyName>
+    <Name>demo</Name>
+    <RootNamespace>demo</RootNamespace>
+    <ToolchainFlavour>Native</ToolchainFlavour>
+    <KeepTimersRunning>true</KeepTimersRunning>
+    <OverrideVtor>false</OverrideVtor>
+    <CacheFlash>true</CacheFlash>
+    <ProgFlashFromRam>true</ProgFlashFromRam>
+    <RamSnippetAddress />
+    <UncachedRange />
+    <preserveEEPROM>true</preserveEEPROM>
+    <OverrideVtorValue />
+    <BootSegment>2</BootSegment>
+    <eraseonlaunchrule>1</eraseonlaunchrule>
+    <AsfFrameworkConfig>
+      <framework-data xmlns="">
+        <options />
+        <configurations />
+        <files />
+        <documentation help="" />
+        <offline-documentation help="" />
+        <dependencies>
+          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.21.0" />
+        </dependencies>
+      </framework-data>
+    </AsfFrameworkConfig>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../demo</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../demo</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize (-O1)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>%24(ProjectDir)\Device_Startup</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsam3x8e_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x;../../demo;C:/Users/jp/Documents/Arduino/libraries/DueTimer;C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility;C:/Users/jp/Documents/Arduino/libraries/ESP8266;C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility;C:/Program Files (x86)/Arduino/libraries/Ethernet/src;C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility;C:/Users/jp/Documents/Arduino/libraries/IniFile;C:/Users/jp/Documents/Arduino/libraries/IniFile/utility;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility;C:/Users/jp/Documents/Arduino/libraries/RTClib-master;C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility;C:/Users/jp/Documents/Arduino/libraries/SdFat;C:/Users/jp/Documents/Arduino/libraries/SdFat/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility;C:/Users/jp/Documents/Arduino/libraries/UTouch;C:/Users/jp/Documents/Arduino/libraries/UTouch/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility;C:/Program Files (x86)/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers;C:/Users/jp/Documents/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/;C:/Users/jp/Documents/Arduino/Webradio;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/;;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers/VM_DBG;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings xmlns="">
+        <ValidatedAS7>1</ValidatedAS7>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <ToolchainSettings>
+      <ArmGccCpp>
+  <armgcc.common.outputfiles.hex>True</armgcc.common.outputfiles.hex>
+  <armgcc.common.outputfiles.lss>True</armgcc.common.outputfiles.lss>
+  <armgcc.common.outputfiles.eep>True</armgcc.common.outputfiles.eep>
+  <armgcc.common.outputfiles.bin>True</armgcc.common.outputfiles.bin>
+  <armgcc.common.outputfiles.srec>True</armgcc.common.outputfiles.srec>
+  <armgcc.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcc.compiler.symbols.DefSymbols>
+  <armgcc.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../demo</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcc.compiler.directories.IncludePaths>
+  <armgcc.compiler.optimization.level>Optimize (-O1)</armgcc.compiler.optimization.level>
+  <armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcc.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcc.compiler.optimization.DebugLevel>Maximum (-g3)</armgcc.compiler.optimization.DebugLevel>
+  <armgcc.compiler.warnings.AllWarnings>True</armgcc.compiler.warnings.AllWarnings>
+  <armgcccpp.compiler.symbols.DefSymbols>
+    <ListValues>
+      <Value>ARDUINO=167</Value>
+      <Value>ARDUINO_MAIN</Value>
+      <Value>F_CPU=84000000L</Value>
+      <Value>printf=iprintf</Value>
+      <Value>__SAM__</Value>
+      <Value>ARDUINO_SAM_DUE</Value>
+      <Value>ARDUINO_ARCH_SAM</Value>
+      <Value>__SAM3X8E__</Value>
+      <Value>USB_VID=0x2341</Value>
+      <Value>USB_PID=0x003e</Value>
+      <Value>USBCON</Value>
+    </ListValues>
+  </armgcccpp.compiler.symbols.DefSymbols>
+  <armgcccpp.compiler.directories.IncludePaths>
+    <ListValues>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/</Value>
+      <Value>C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries</Value>
+      <Value>C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries</Value>
+      <Value>C:/Program Files (x86)/Arduino/libraries</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/UTouch</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/RTClib-master</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility</Value>
+      <Value>C:/Users/jp/Documents/Arduino/libraries/DueTimer</Value>
+      <Value>../../demo</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x</Value>
+      <Value>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino</Value>
+    </ListValues>
+  </armgcccpp.compiler.directories.IncludePaths>
+  <armgcccpp.compiler.optimization.level>Optimize (-O1)</armgcccpp.compiler.optimization.level>
+  <armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>True</armgcccpp.compiler.optimization.PrepareFunctionsForGarbageCollection>
+  <armgcccpp.compiler.optimization.DebugLevel>Maximum (-g3)</armgcccpp.compiler.optimization.DebugLevel>
+  <armgcccpp.compiler.warnings.AllWarnings>True</armgcccpp.compiler.warnings.AllWarnings>
+  <armgcccpp.linker.libraries.Libraries>
+    <ListValues>
+      <Value>libm</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.Libraries>
+  <armgcccpp.linker.libraries.LibrarySearchPaths>
+    <ListValues>
+      <Value>%24(ProjectDir)\Device_Startup</Value>
+    </ListValues>
+  </armgcccpp.linker.libraries.LibrarySearchPaths>
+  <armgcccpp.linker.optimization.GarbageCollectUnusedSections>True</armgcccpp.linker.optimization.GarbageCollectUnusedSections>
+  <armgcccpp.linker.miscellaneous.LinkerFlags>-Tsam3x8e_flash.ld</armgcccpp.linker.miscellaneous.LinkerFlags>
+  <armgcccpp.assembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.assembler.general.IncludePaths>
+  <armgcccpp.assembler.debugging.DebugLevel>Default (-g)</armgcccpp.assembler.debugging.DebugLevel>
+  <armgcccpp.preprocessingassembler.general.IncludePaths>
+    <ListValues>
+      <Value>%24(PackRepoDir)\atmel\SAM3X_DFP\1.0.35\include</Value>
+      <Value>%24(PackRepoDir)\arm\cmsis\4.2.0\CMSIS\Include\</Value>
+    </ListValues>
+  </armgcccpp.preprocessingassembler.general.IncludePaths>
+  <armgcccpp.preprocessingassembler.debugging.DebugLevel>Default (-Wa,-g)</armgcccpp.preprocessingassembler.debugging.DebugLevel>
+</ArmGccCpp>
+    </ToolchainSettings>
+    <VMSETTING_IncludePaths>C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/cores/arduino;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/variants/arduino_due_x;../../demo;C:/Users/jp/Documents/Arduino/libraries/DueTimer;C:/Users/jp/Documents/Arduino/libraries/DueTimer/utility;C:/Users/jp/Documents/Arduino/libraries/ESP8266;C:/Users/jp/Documents/Arduino/libraries/ESP8266/utility;C:/Program Files (x86)/Arduino/libraries/Ethernet/src;C:/Program Files (x86)/Arduino/libraries/Ethernet/src/utility;C:/Users/jp/Documents/Arduino/libraries/IniFile;C:/Users/jp/Documents/Arduino/libraries/IniFile/utility;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src;C:/Users/jp/Documents/Arduino/libraries/karaClass-master/src/utility;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due;C:/Users/jp/Documents/Arduino/libraries/marekburiakILI9341due/utility;C:/Users/jp/Documents/Arduino/libraries/RTClib-master;C:/Users/jp/Documents/Arduino/libraries/RTClib-master/utility;C:/Users/jp/Documents/Arduino/libraries/SdFat;C:/Users/jp/Documents/Arduino/libraries/SdFat/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/SPI/utility;C:/Users/jp/Documents/Arduino/libraries/UTouch;C:/Users/jp/Documents/Arduino/libraries/UTouch/utility;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries/Wire/utility;C:/Program Files (x86)/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/libraries;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers;C:/Users/jp/Documents/Arduino/libraries;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/CMSIS/Include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/CMSIS/Device/ATMEL/;C:/Users/jp/Documents/Arduino/Webradio;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/c++/4.8.3/arm-none-eabi/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/arm-none-eabi/include/;C:/Users/jp/AppData/Local/arduino15/packages/arduino/tools/arm-none-eabi-gcc/4.8.3-2014q1/lib/gcc/arm-none-eabi/4.8.3/include;C:/Users/jp/AppData/Local/arduino15/packages/arduino/hardware/sam/1.6.6/system/libsam/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm-none-eabi/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/arm_none_eabi/include/;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include;C:/Program Files (x86)/Arduino/hardware/tools/g++_arm_none_eabi/lib/gcc/arm-none-eabi/4.4.1/include/;;C:/Program Files (x86)/Atmel/Studio/7.0/Extensions/4bcowaes.q3i/Micro Platforms/default/debuggers/VM_DBG;</VMSETTING_IncludePaths>
+    <VisualMicroSettings>
+      <VisualMicroSettings xmlns="">
+        <ValidatedAS7>1</ValidatedAS7>
+      </VisualMicroSettings>
+    </VisualMicroSettings>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="demo.ino">
+      <SubType>compile</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="karaScreenConfig.h">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="__vm\.demo.vsarduino.h">
+      <SubType>compile</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="__vm\" />
+  </ItemGroup>
+  <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
+</Project>

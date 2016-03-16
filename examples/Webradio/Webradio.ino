@@ -20,8 +20,9 @@
 #include "myArial14.h"
 
 #include <ESP8266.h>
+#include <karaScreen.h>
 #include "karaScreenConfig.h"
-#include "karaScreen.h"
+
 
 ///////////////////////////////////
 // hardware config:
@@ -109,10 +110,7 @@ uint16_t cnt = 0;
 String string;
 char charac[10];
 void loop() {
-  // put your main code here, to run repeatedly:
-  while (true) { 
      myScreen.Task();// mandatory. The engine
-  }
 }
 ////MODIFY///////////////////////////////////////////////
 // Called in the TScreen::Task(). Put your  code here
