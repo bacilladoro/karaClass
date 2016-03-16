@@ -953,7 +953,9 @@ void TScreen::doSecond(DateTime dtime)
 	if (screensaver != TSCREENSAVER+1) screensaver++;
 	userSecond(); // call the user part
 }
-void TScreen::doStatus()
+
+// now defined in karaScreenConfig.h
+/*void TScreen::doStatus()
 {
 	//  dbgprintln("doStatus");
 	EStatus.TrigOff();
@@ -966,7 +968,7 @@ void TScreen::doStatus()
 	myScreen.StatusBar->Status[2]->Modified = true;
 
 	StatusBar->Refresh();
-}
+}*/
 
 // Minimal init in order to display the welcome message
 // not mandatory
