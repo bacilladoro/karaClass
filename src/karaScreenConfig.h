@@ -67,7 +67,13 @@ void TScreen::userBegin()
   //Panels->Keyboard = new TKeyboard(this);
 
 }
+void TScreen::doStatus()
+{
+	//  dbgprintln("doStatus");
+	EStatus.TrigOff();
 
+	StatusBar->Refresh();
+}
 ////////////////////////////////////////////////////////////
 /*
  *   Action to be executed on touch button
