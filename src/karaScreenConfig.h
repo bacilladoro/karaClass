@@ -66,7 +66,6 @@ void TScreen::userBegin()
   // Keyboard and BigTime are dynamically allocated when needed
   //Panels->Keyboard = new TKeyboard(this);
 
-
 }
 
 ////////////////////////////////////////////////////////////
