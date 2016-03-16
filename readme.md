@@ -23,7 +23,7 @@
  * See examples folder
  * 
 
- KARACLASS_VERSION 1.02
+ KARACLASS_VERSION 1.03
  
  
  karaClass is a skeleton to build structured user screen on ILI9341 touch screen (around 6$ in china) for arduino due.
@@ -38,11 +38,40 @@
  TStBar: a panel at the top of the screen. It contains TStatus object.<br/>
  TKeyboard: a complete qwerty keyboard<br/>
  TBigTime: A panel displaying date and time
- 
+ TSlider: A panel with a slider.
  Added a screensaver timeout (BigTime after a minute of inactivity)
  
  A TButtons panel can be in group mode ie only all TButton are in toggle mode but only one can be On.<br/>
  A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.<br/>
+ 
+ On many components, a user action may be called for each touch, untouch and slide events.
+ 
+ To add your code, please use only definitions beggining with userXXX
+ void loop() {
+     myScreen.Task();// mandatory. The engine
+}
+
+In your project.ino
+////MODIFY///////////////////////////////////////////////
+// Called in the TScreen::Task(). Put your  code here
+void TScreen::userTask()
+{
+ ; 
+}
+// Called every second. Put your code here
+void TScreen::userSecond()
+{
+;
+}
+
+In KaraScreenConfig.h:
+/////////////////////////////////////////////////////////
+// must be modified depending of the screen configuration
+// Complete screen configuration, init ans start
+void TScreen::userBegin()
+{
+...
+ 
  
  See the example to show these elements in action.<br/>
  The example needs additional libraries:<br/>
@@ -62,9 +91,11 @@ Keyboard phone mode<br/>
 BigTime<br/>
 <img src="https://github.com/karawin/karaClass/blob/master/2016-03-14 19.50.13.jpg" alt="screenshot" border=0> 
 Radio buttons panel<br/>
+<img src="https://github.com/karawin/karaClass/blob/master/2016-03-16 17.28.01.jpg" alt="screenshot" border=0> 
+Slider<br/>
 
 Video:<br/>
-https://www.youtube.com/watch?v=AUtO0maLCmw
+https://www.youtube.com/watch?v=f44uVu8w-bA
 
 
 

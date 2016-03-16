@@ -19,11 +19,17 @@
  * See examples folder
  * No needs to modify this .cpp
  */
-#include <SdFat.h>
+
 #include "karaScreen.h"
 void setTime(void); //action
 void setDate(void); //action
 extern TScreen  myScreen;
+extern  UTouch myTouch;
+// Forward declarations
+void myTouchInt();
+void StatInt();
+void TimeInt();
+
 //  ----------TLogo------------------------------
 void TLogo::Background(uint16_t color)
 {
@@ -181,6 +187,8 @@ void TBigTime::Draw()
   sprintf(ci,"%02d/%02d/%04d", dt0.day(),dt0.month(),dt0.year()); 
   Parent->fillRect  (WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 ),(HEIGHT/3) +50,Arial_bold_14[2]*(strlen(ci)+1),Arial_bold_14[3],color) ;
   Parent->printAt(ci,WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 ),(HEIGHT/3) +50);
+  Parent->setTextColor(ILI9341_GRAY);
+  if (!Options.isActive()) Parent->printAt("Set: touch here",4*WIDTH/8 ,(HEIGHT-30));
 }
 void TBigTime::Touch(uint16_t xt, uint16_t yt)
 {
@@ -426,6 +434,7 @@ void TButtons::RadioBox(bool state)
        Button[i]->Radio = true;
      }
   }
+  if (state) Button[0]->State = true;
 }
 void TButtons::setTop(uint16_t Top)
 {
@@ -455,24 +464,22 @@ void TButtons::Draw(void)
 void TButtons::Touch(uint16_t xt, uint16_t yt)
 {
   if (!active) return;
-  if (grouped)
-  {
-    for (uint16_t i = 0;i < nb; i++)
-      if (Button[i] != NULL)
-      {
-        if(Button[i]->State)
-        {
-          Button[i]->State = false ;
-          Button[i]->Draw();
-        }  
-      }  
-  }
   for (uint16_t i = 0;i < nb; i++)
   {
     if (Button[i] != NULL)
     {
       if ((xt >= Button[i]->Left) && (xt <= Button[i]->Left+Button[i]->Width))
       {
+	    if (Button[i]->Radio)  // clear all other radio button on this panel
+        for (uint16_t j = 0;j < nb; j++)
+          if (Button[j] != NULL)
+          {
+	         if((Button[j]->State)&&(Button[j]->Radio))
+	         {
+	     	    Button[j]->State = false ;
+		        Button[j]->Draw();
+	         }
+          }
          Button[i]->Touch();
          break;      
       }
@@ -496,6 +503,68 @@ void TButtons::unTouch(uint16_t xt, uint16_t yt)
   }
 }
 
+// ------TSlider-------------
+void TSlider::Draw(void)
+{
+  dbgprint("TSlide draw top Height ");dbgprint(top); dbgprint(" ");dbgprintln(BHEIGHT);
+  if (!active) return;
+  displayed = true;
+  Parent->fillRect(0,top,WIDTH,BHEIGHT,color) ;
+  Parent->drawRect(0,top,WIDTH,BHEIGHT,ILI9341_WHITE) ;
+  Parent->fillRoundRect((3*WIDTH/20)-2,top+(4*BHEIGHT/10),(14*WIDTH/20)+6,(5*BHEIGHT/10),4*BHEIGHT/20,btColor) ;
+  Parent->drawRoundRect((3*WIDTH/20)-2,top+(4*BHEIGHT/10),(14*WIDTH/20)+6,(5*BHEIGHT/10),4*BHEIGHT/20,ILI9341_BLACK) ;
+  Parent->setFont(Arial_bold_14);
+  Parent->setTextColor(ILI9341_WHITE);
+  Parent->setTextArea(3*WIDTH/20- (4*ARIAL_BOLD_14_WIDTH),top+(5*BHEIGHT/10)+PAD,WIDTH-PAD,ARIAL_BOLD_14_HEIGHT); //min max
+  Parent->printAt((String)mini,0,0);
+  Parent->printAt((String)maxi,(14*WIDTH/20)+(5*ARIAL_BOLD_14_WIDTH) , 0);
+  Parent->setTextArea(3*WIDTH/20,top+(3*BHEIGHT/20),14*WIDTH/20,ARIAL_BOLD_14_HEIGHT); //Caption
+  Parent->printAt(Caption,(Caption.length()*ARIAL_BOLD_14_WIDTH)/3,  0);
+
+  Update(value);
+}
+void TSlider::Update(int val)
+{
+	dbgprint("TSlide clear top Height ");dbgprint(top); dbgprint(" ");dbgprintln(BHEIGHT);
+	if (!active) return;
+	if (!displayed) Draw();
+	else
+	{
+	  String sval(val );
+	  step = (swidth *(val-mini))/ (maxi-mini);
+	  Parent->fillCircle((3*WIDTH/20)+(4*BHEIGHT/20) + step ,top+(4*BHEIGHT/10)+(5*BHEIGHT/20),rad+2 , btColor);
+      Parent->fillRect((3*WIDTH/20)+(4*BHEIGHT/20) + step  - (ARIAL_BOLD_14_WIDTH* sval.length())/2 + ARIAL_BOLD_14_WIDTH/4 ,
+	     top+(4*BHEIGHT/10)+(5*BHEIGHT/20)-ARIAL_BOLD_14_HEIGHT/2 ,2*rad ,ARIAL_BOLD_14_HEIGHT,btColor);
+	  sval =value ;
+      Parent->setFont(Arial_bold_14);
+      Parent->setTextColor(ILI9341_WHITE);
+	  step = (swidth *(value-mini))/ (maxi-mini);
+	  Parent->fillCircle((3*WIDTH/20)+(4*BHEIGHT/20) + step ,top+(4*BHEIGHT/10)+(5*BHEIGHT/20),rad+2 ,0xA514);
+	  Parent->fillCircle((3*WIDTH/20)+(4*BHEIGHT/20) + step ,top+(4*BHEIGHT/10)+(5*BHEIGHT/20),rad ,  ILI9341_BLACK);
+      Parent->setTextArea((3*WIDTH/20)+(4*BHEIGHT/20) + step  - (ARIAL_BOLD_14_WIDTH* sval.length())/2 + ARIAL_BOLD_14_WIDTH/4 ,
+	     top+(4*BHEIGHT/10)+(5*BHEIGHT/20)-ARIAL_BOLD_14_HEIGHT/2 ,2*rad ,ARIAL_BOLD_14_HEIGHT);
+      Parent->print(sval);
+	}
+}
+/*  int rad = 4*BHEIGHT/20;
+  int swidth = (14*WIDTH/20) - (8*BHEIGHT/20);
+  int step = (swidth *(value+mini))/ (maxi-mini);*/
+
+void TSlider::Slide(uint16_t xt, uint16_t yt)
+{
+  dbgprint("TSlide Slide  XT= ");dbgprintln(xt);
+  xt -= (3*WIDTH/20)+(4*BHEIGHT/20); //relative to slider now
+  if ((int16_t)xt<-1) xt = 0;
+  dbgprint("TSlide Slide  XT= ");dbgprintln(xt);
+  int val = value;
+  value = (xt*(maxi-mini)+ (swidth*mini))/swidth;
+/*  dbgprint("TSlide Slide  value= ");dbgprintln(value);
+  dbgprint("TSlide Slide  swidth= ");dbgprintln(swidth);
+  dbgprint("TSlide Slide  maxi-mini= ");dbgprintln(maxi-mini);*/
+  (value <= mini)? value = mini:value;
+  (value >= maxi)? value = maxi:value;
+  Update(val);
+}
 // ------TPanel------------
 void TPanel::clearPanelLines()
 {
@@ -644,6 +713,12 @@ void TPanels::Touch(uint16_t xt, uint16_t yt)
         Keyboard->Touch(xt,yt);
         return;
       }  
+  if (Slider!= NULL)
+    if ((Slider->isActive()) && (yt >= Slider->getTop()) && (yt <= Slider->getTop()+BHEIGHT))
+    {
+      Slider->Touch(xt,yt);
+      return;
+    }
 
   for (i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
@@ -655,6 +730,7 @@ void TPanels::Touch(uint16_t xt, uint16_t yt)
   if ((Panel->isActive()))
     Panel->Touch(xt,yt);     
 }
+
 void TPanels::unTouch(uint16_t xt, uint16_t yt)
 {
   uint16_t i;
@@ -672,7 +748,15 @@ void TPanels::unTouch(uint16_t xt, uint16_t yt)
       { 
         Keyboard->unTouch(xt,yt);
         return;
-      }    
+      }  
+	  
+  if (Slider!= NULL)
+  if ((Slider->isActive()) && (yt >= Slider->getTop()) && (yt <= Slider->getTop()+BHEIGHT))
+  {
+	  Slider->unTouch(xt,yt);
+	  return;
+  }
+	    
   for (i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
       if ((Bts[i]->isActive()) && (yt >= Bts[i]->getTop()) && (yt <= Bts[i]->getTop()+BHEIGHT)) 
@@ -683,6 +767,26 @@ void TPanels::unTouch(uint16_t xt, uint16_t yt)
   if ((Panel->isActive()))
     Panel->unTouch(xt,yt);     
 }
+
+void TPanels::Slide(uint16_t xt, uint16_t yt)
+{
+  uint16_t i;
+    if (Slider!= NULL)
+    if ((Slider->isActive()) && (yt >= Slider->getTop()) && (yt <= Slider->getTop()+BHEIGHT))
+    {
+	    Slider->Slide(xt,yt);
+	    return;
+    }
+
+  for (i = 0; i< MAXBTS; i++)
+  if (Bts[i]!= NULL)
+  if ((Bts[i]->isActive()) && (yt >= Bts[i]->getTop()) && (yt <= Bts[i]->getTop()+BHEIGHT))
+  {
+	  Bts[i]->Slide(xt,yt);
+	  return;
+  }
+}
+
 void TPanels::Draw()
 { 
   dbgprint(PSTR("TPanels Draw unti= "));dbgprintln(HEIGHT);
@@ -720,7 +824,16 @@ void TPanels::Draw()
           unti =Keyboard->getTop();
       }       
   }
-
+    if (Slider!= NULL)
+    {
+	    if (Slider->isActive())
+	    {
+		    if (!Slider->isDisplayed()){ Slider->Draw(); }
+		    else { Slider->reDraw();}
+		    if (unti > Slider->getTop())
+		    unti = Slider->getTop();
+	    }
+    }
   Panel->Draw(LHEIGHT,unti);    
 }
 //  -------TStatus--------------------------
@@ -783,6 +896,180 @@ void TStBar::reDraw(uint16_t inde)
   if ((inde <MAXSTATUS)&&(Status[inde] != NULL)) Status[inde]->Draw();
 }
 
+/////////////////////////////////////////////////////
+//  ---------------------TScreen--------------------------
+// may be modified depending of the screen configuration
+//-------------------------------------------
+//the screen made with one Status bar, a logo,  5 buttons array max and a panel of text.
+///MODIFY/////////////////////////////////////////////////
+void TScreen::Draw()
+{
+	Logo->Draw( 288, 0 );
+	if (!active) return;
+	StatusBar->Draw();
+	Panels->Draw();
+}
+////END MODIFY////////////////////////////////////
+//
+// touch screen detected
+void TScreen::Touch(uint16_t xt, uint16_t yt)
+{
+	// unarm the trigger
+	ETouch.TrigOff();
+	screensaver = 0; // activity so reset screensaver
+	Panels->Touch(xt,yt);
+}
+void TScreen::unTouch(uint16_t xt, uint16_t yt)
+{
+	// unarm the trigger
+	EunTouch.TrigOff();
+	screensaver = 0; // activity so reset screensaver
+	Panels->unTouch(xt,yt);
+}
+void TScreen::Slide(uint16_t xt, uint16_t yt)
+{
+	// unarm the trigger
+	ESlide.TrigOff();
+	screensaver = 0; // activity so reset screensaver
+	Panels->Slide(xt,yt);
+}
+// called every second. Add your own processing
+void TScreen::doSecond(DateTime dtime)
+{
+	ESecond.TrigOff();
+	if (Panels->BigTime != NULL)
+	{
+		if (Panels->BigTime->isActive())
+		Panels->BigTime->Draw();
+	}
+	
+	//  dbgprint("screensaver: ");dbgprintln(screensaver);
+	if (screensaver == TSCREENSAVER)
+	{
+		screensaver++;
+		dbgprintln("screensaver go");
+		Panels->StartBigTime();
+	} else
+	if (screensaver != TSCREENSAVER+1) screensaver++;
+	userSecond(); // call the user part
+}
+void TScreen::doStatus()
+{
+	//  dbgprintln("doStatus");
+	EStatus.TrigOff();
+	bool stori = myScreen.StatusBar->Status[2]->State;
+	bool st = !stori;
+	myScreen.StatusBar->Status[2]->State = st;
+	myScreen.StatusBar->Status[0]->Caption((char*)(st?"OK":"NOK"));
+	myScreen.StatusBar->Status[0]->Modified = true;
+	if (st != stori)
+	myScreen.StatusBar->Status[2]->Modified = true;
+
+	StatusBar->Refresh();
+}
+
+// Minimal init in order to display the welcome message
+// not mandatory
+void TScreen::Welcome()
+{
+	ILI9341_due::begin();  // for Print
+	// some default
+	welcome = true;
+	setRotation(iliRotation270);  // landscape
+	fillScreen(ILI9341_DARKBLUE);
+	setFontMode(gTextFontModeTransparent);
+	setFont(Arial_bold_14);
+	setTextColor(ILI9341_WHITE, ILI9341_NAVY);
+}
+
+void TScreen::Begin()
+{
+	// Initialize the touch screen
+	myTouch.InitTouch();
+	myTouch.setPrecision(PREC_MEDIUM);
+	if (!welcome) Welcome();
+	// do not modify after
+	//Activate and display screen
+	// starts the interrupts
+	DueTimer::getAvailable().attachInterrupt(myTouchInt).start(TIMER1);  // for touch / untouch
+	DueTimer::getAvailable().attachInterrupt(StatInt).start(TIMER2);     // for status bar computing
+	DueTimer::getAvailable().attachInterrupt(TimeInt).start(TIMER3);;    // for user task and time task
+	userBegin();
+	Show();
+	Draw();
+}
+// The screen motor
+void TScreen::Task()
+{
+	if (ETouch.isArmed())  // touch trigged in interrupt. Process it here in the main loop
+	Touch(ETouch.xt,ETouch.yt);
+	if (EunTouch.isArmed())
+	unTouch(EunTouch.xt,EunTouch.yt);
+	if (ESlide.isArmed())
+	Slide(ESlide.xt,ESlide.yt);
+	if (ESecond.isArmed())
+	doSecond(DateTime (rtc.now()));;
+	if (EStatus.isArmed())
+	doStatus();
+	
+	
+	// call the user processing
+	userTask();
+}
+
+// allocate a keyboard and wait for the returned String if any.
+// Non blocking for the user point of view.
+String TScreen::Keyboard(String banner, uint8_t set  )
+{
+	Panels->StartKeyboard(banner,set);
+	while (!Panels->isKeyboard()) Task();
+	return Panels->GetKeyboard();
+}
+
+///////////////////////////////////////////////////////
+static uint16_t xt,yt,ixt,iyt;
+
+// handler routine for timer1 to read the touch screen
+void myTouchInt()
+{
+	static bool inTouch = false;
+	if ((!inTouch)&&(myTouch.dataAvailable()))
+	{
+		inTouch = true;
+		myTouch.read();
+		xt = myTouch.getX();
+		yt = myTouch.getY();
+		ixt = xt; iyt = yt;
+		myScreen.ETouch.TrigOn(xt,yt);
+	}
+	if ((inTouch)&&(myTouch.dataAvailable()))
+	{
+		myTouch.read();
+		ixt = myTouch.getX();
+		iyt = myTouch.getY();
+		if ((ixt != xt)||(iyt != yt))
+		myScreen.ESlide.TrigOn(ixt,iyt);
+	}
+	if ((inTouch)&&(!myTouch.dataAvailable()))
+	{
+		inTouch = false;
+		myScreen.EunTouch.TrigOn(xt,yt);
+	}
+}
+// compute the status bar
+
+void StatInt()
+{
+	myScreen.EStatus.TrigOn();
+}
+void TimeInt()
+{
+	char  ci[10] ;
+	DateTime dt0(rtc.now());
+	myScreen.ESecond.TrigOn();
+	sprintf(ci,"%02d:%02d:%02d", dt0.hour(),dt0.minute(),dt0.second());
+	myScreen.StatusBar->Status[3]->Caption(ci);
+}
 
 void setTime(void)
 { 

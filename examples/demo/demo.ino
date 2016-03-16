@@ -1,19 +1,39 @@
 
-
-/* A pattern to develop new project using karaclass
+/* A demo of KaraClass library for arduino DUE board
  *  
  *  Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr
- *  Pattern for end user
  */
 
 // library
-#include <SdFat.h>
-#include <SdFatUtil.h>
-#include <IniFile.h>
-
-//#include <ESP8266.h>
-
+#include <ILI9341_due_config.h>
+#include <ILI9341_due.h>
+#include <SPI.h>
+#include <DueTimer.h>
+#include <UTouch.h>
+#include <RTClib.h>
+#include <Wire.h>
+#include <karaScreen.h>
+#include "myArial14.h"
 #include "karaScreenConfig.h"
+
+
+#ifdef __arm__
+extern "C" char* sbrk(int incr);
+int FreeRam() {
+  char top;
+  return &top - reinterpret_cast<char*>(sbrk(0));
+}
+#else  // __arm__
+extern char *__brkval;
+extern char __bss_end;
+/** Amount of free RAM
+ * \return The number of free bytes.
+ */
+int FreeRam() {
+  char top;
+  return __brkval ? &top - __brkval : &top - &__bss_end;
+}
+#endif  // __arm
 ///////////////////////////////////
 // hardware config:
 // For the TFT panel and associated touch panel, these are the default.
@@ -26,58 +46,56 @@
 #define TFTT_TDIN 26
 #define TFTT_TDOUT 24
 #define TFTT_IRQ 22
-// cs for the sd card reader (other pins to miso, mosi and clk of spi bus)
-const uint8_t SD_CS = 11;
-#define SD_SPI_SPEED SPI_HALF_SPEED  // SD card SPI speed, try SPI_FULL_SPEED
-////////////////////////////////////
 
 //class TScreen;
 // Use hardware SPI 
-//ILI9341_due tft(TFT_CS, TFT_DC, TFT_RST);
+// ILI9341_due tft(TFT_CS, TFT_DC, TFT_RST);
 UTouch  myTouch(TFTT_CLK, TFTT_CS,TFTT_TDIN, TFTT_TDOUT, TFTT_IRQ);
 TScreen  myScreen(TFT_CS, TFT_DC, TFT_RST);
-//ESP8266 myWifi;
-SdFat SD;
-SdFile bmpFile; // set filesystem
+
 
 char buffer[254]; // general purpose buffer.
-String SSID;
-String SSIDPASSWORD;
 
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(115200);
   while (!Serial) ; // wait for Arduino Serial Monitor
-  Serial.println(F("Web Radio")); 
+  Serial.println(F("Demo")); 
   rtc.begin(dt);  
-//  myWifi.SoftReset();
+
 ///////////////////////////////////////
 // MODIFY//////////////////////////////
 // Pre display some Welcome messages.
   myScreen.Welcome(); // pre init myScreen to display the welcome
+  myScreen.printAt("KaraClass demo by KaraWin", 30,90);
   myScreen.printAt("Free memory: ", 30,110);
   myScreen.println(String(FreeRam(),DEC).c_str());
-  delay(1000); // Welcome show timer
-/// END MODIFY
 
+    delay(2000); // Welcome show timer
   // Initialize myScreen
-  myScreen.Begin(); 
+  myScreen.Begin();
+
+/// END MODIFY
 }
 
 uint16_t cnt = 0;
 String string;
 char charac[10];
+
 void loop() {
-  // put your main code here, to run repeatedly:
-  while (true) { 
      myScreen.Task();// mandatory. The engine
-  }
 }
+
 ////MODIFY///////////////////////////////////////////////
 // Called in the TScreen::Task(). Put your  code here
 void TScreen::userTask()
 {
  ; 
+}
+// Called every second. Put your code here
+void TScreen::userSecond()
+{
+;
 }
 
 

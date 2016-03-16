@@ -19,9 +19,11 @@
  * See examples folder
  *  No needs to modify this .h
  */
-#ifdef __arm__
+
 #ifndef karaScreen_h
 #define karaScreen_h
+
+#define KARACLASS_VERSION 1.03
 
 #if defined(ARDUINO_ARCH_AVR)
     #include <avr/pgmspace.h>
@@ -30,6 +32,10 @@
 #endif
 #include <stdio.h>
 #include <RTClib.h>
+#include <UTouch.h>
+#include <DueTimer.h>
+static RTC_Millis rtc;
+static DateTime dt( F(__DATE__), F(__TIME__)); // init time with the compilation info
 
 // some trace if DEBUG = 1 else 0
 #define DEBUG 1
@@ -41,7 +47,8 @@
 #define dbgprintln(...) /**/  
 #endif
 
-extern RTC_Millis rtc;
+
+
 #include <ILI9341_due_config.h>
 #include <ILI9341_due.h>
 #include "fonts\Arial_bold_14.h"
@@ -49,7 +56,15 @@ extern RTC_Millis rtc;
 #include "myArial14.h"
 #include "fonts\fixednums15x31.h"
 
-#define KARACLASS_VERSION 1.02
+
+
+// TIMER
+// timer interrupt for touch screen 100ms
+#define TIMER1 100000
+// for status bar refresh: 2 seconds
+#define TIMER2 2000000
+// clock display  1 sec
+#define TIMER3 1000000
 
 // size of the screen
 #define WIDTH 320
@@ -142,6 +157,7 @@ protected:
 public:
   virtual void Touch(uint16_t xt, uint16_t yt) {;}
   virtual void unTouch(uint16_t xt, uint16_t yt){;}
+  virtual void Slide(uint16_t xt, uint16_t yt){;}
   virtual void Draw(void)  = 0;
   bool isActive(void) const { return active;} 
   bool isDisplayed (void) const { return displayed;} 
@@ -222,9 +238,41 @@ public:
   void setTop(uint16_t Top);
   uint16_t getTop(){return top;}
   void Touch(uint16_t xt, uint16_t yt);
-  void unTouch(uint16_t xt, uint16_t yt); 
+  void unTouch(uint16_t xt, uint16_t yt);
+  void Slide(uint16_t xt, uint16_t yt){} 
   void Draw(void);
   void RadioBox(bool state);  // if true, all buttons are bistable but only one is in state trus
+};
+class TSlider: public TBase
+{
+	private:
+	uint16_t top ;
+	uint16_t color = ILI9341_BLUE;
+	int mini,maxi,center;
+	int value;
+	int rad = (4*BHEIGHT/20);
+	int swidth = (14*WIDTH/20) - (8*BHEIGHT/20) ;
+	int step ;
+
+	public:
+	TSlider(ILI9341_due* parent,int min, int max, int centre){Parent = parent; mini=min;maxi=max;value=center=centre;top = HEIGHT - BHEIGHT;} 
+	uint16_t btColor = ILI9341_GRAY;  // default slider  background color
+    String Caption;  
+	void setTop(uint16_t Top){top = Top;}
+	uint16_t getTop(){return top;}
+	void setValue(int val){ value = val; Draw();}
+	int  getValue(){return value;}
+	void setMini(int min){ mini = min; Draw();}
+	int  getMini(){return mini;}
+	void setMaxi(int max){ maxi = max; Draw();}
+	int  getMaxi(){return maxi;}
+	void setCenter(int centre){ center = centre; Draw();}
+	int  getCenter(){return center;}
+	void Touch(uint16_t xt, uint16_t yt){;}
+	void unTouch(uint16_t xt, uint16_t yt){;}
+	void Slide(uint16_t xt, uint16_t yt);
+	void Draw(void);
+	void Update(int val); //erase old val and update value;
 };
 //-------------------------------------------
 // Main Panel  of the screen. Owned by TPanels
@@ -278,11 +326,13 @@ public:
   TPanels(ILI9341_due* parent);
   bool Active = true;
   TButtons* Bts[MAXBTS]; // the set of buttons panels
+  TSlider*  Slider; // one by default
   TKeyboard* Keyboard = NULL;  // created when needed
   TBigTime* BigTime = NULL; //created when needed
   TPanel* Panel = 0; 
   void Touch(uint16_t xt, uint16_t yt);
   void unTouch(uint16_t xt, uint16_t yt);
+  void Slide(uint16_t xt, uint16_t yt);
   void Draw();
   void StartBigTime();
   void StopBigTime();
@@ -341,8 +391,11 @@ class TScreen :public ILI9341_due ,public TBase
 	bool welcome = false;
 	void Touch(uint16_t xt, uint16_t yt);         //compute a touch event  from interrupt
 	void unTouch(uint16_t xt, uint16_t yt);       //compute an untouch event
+	void Slide(uint16_t xt, uint16_t yt);         //compute Slide  event
 	void doSecond(DateTime dtime);
 	void doStatus();
+	void userBegin(void);                             // init me please
+
 	public:
 	TScreen(uint8_t cs, uint8_t dc, uint8_t rst = 255):ILI9341_due(cs,  dc, rst ){;}
 	void Begin(void);                             // init me please
@@ -352,7 +405,7 @@ class TScreen :public ILI9341_due ,public TBase
 	void userSecond(void);
 	void Draw(void);                              // Draw the all screen
 	uint16_t Color = ILI9341_DARKBLUE;            // default screen background color
-	String Keyboard(String banner, uint8_t set);  // call a non blocking keyboard (Task() called inside)
+	String Keyboard(String banner, uint8_t set = KBMAJ);  // call a non blocking keyboard (Task() called inside)
 	void clearCurrentLine() {Panels->Panel->clearCurrentLine();}
 	void Println(char* str)  {Panels->Panel->Println(str);}  // with scrolling
 	void Println(String str) {Panels->Panel->Println(str);}  // with scrolling
@@ -360,6 +413,7 @@ class TScreen :public ILI9341_due ,public TBase
 	void Print(String str) {Panels->Panel->Print(str);}      // with scrolling
 	TEventScreen ETouch;  // internal event to relay interrupt touch detection
 	TEventScreen EunTouch;// ''
+	TEventScreen ESlide;// ''
 	TEventScreen ESecond;  // internal event to do some action in a per second timer
 	TEventScreen EStatus;  // internal event to compute status
 	
@@ -371,8 +425,4 @@ class TScreen :public ILI9341_due ,public TBase
 	TStBar*  StatusBar;
 };
 
-
-#endif
-#else
-  #error Oops! Trying to include  on another device?
 #endif
