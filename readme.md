@@ -43,36 +43,36 @@
  
  A TButtons panel can be in group mode ie only all TButton are in toggle mode but only one can be On.<br/>
  A TButton can be a simple push button or a toggle button (bistable) with or without an image and with a caption.<br/>
- 
- On many components, a user action may be called for each touch, untouch and slide events.
- 
- To add your code, please use only definitions beggining with userXXX
- void loop() {
-     myScreen.Task();// mandatory. The engine
-}
-
-In your project.ino
-////MODIFY///////////////////////////////////////////////
-// Called in the TScreen::Task(). Put your  code here
-void TScreen::userTask()
-{
- ; 
-}
-// Called every second. Put your code here
-void TScreen::userSecond()
-{
-;
-}
-
-In KaraScreenConfig.h:
-/////////////////////////////////////////////////////////
-// must be modified depending of the screen configuration
-// Complete screen configuration, init ans start
-void TScreen::userBegin()
-{
-...
- 
- 
+ <br/>
+ On many components, a user action may be called for each touch, untouch and slide events.<br/>
+ <br/>
+ To add your code, please use only definitions beggining with userXXX<br/>
+ void loop() {<br/>
+     myScreen.Task();// mandatory. The engine<br/>
+}<br/>
+<br/>
+In your project.ino<br/>
+////MODIFY///////////////////////////////////////////////<br/>
+// Called in the TScreen::Task(). Put your  code here<br/>
+void TScreen::userTask()<br/>
+{<br/>
+ ; <br/>
+}<br/>
+// Called every second. Put your code here<br/>
+void TScreen::userSecond()<br/>
+{<br/>
+;<br/>
+}<br/>
+<br/>
+In KaraScreenConfig.h:<br/>
+/////////////////////////////////////////////////////////<br/>
+// must be modified depending of the screen configuration<br/>
+// Complete screen configuration, init ans start<br/>
+void TScreen::userBegin()<br/>
+{<br/>
+...<br/>
+ <br/>
+ <br/>
  See the example to show these elements in action.<br/>
  The example needs additional libraries:<br/>
  RTClib<br/>
