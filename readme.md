@@ -73,6 +73,11 @@ void TScreen::userBegin()<br/>
 ...<br/>
  <br/>
  <br/>
+ void TScreen::userStatus()<br/>
+{<br/>
+	StatusBar->Refresh();<br/>
+}<br/>
+<br/>
  See the example to show these elements in action.<br/>
  The example needs additional libraries:<br/>
  RTClib<br/>
