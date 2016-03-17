@@ -67,10 +67,8 @@ void TScreen::userBegin()
   //Panels->Keyboard = new TKeyboard(this);
 
 }
-void TScreen::doStatus()
+void TScreen::userStatus()
 {
-	//  dbgprintln("doStatus");
-	EStatus.TrigOff();
 
 	StatusBar->Refresh();
 }

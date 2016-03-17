@@ -158,10 +158,10 @@ void TScreen::userBegin()
 }
 
 
-void TScreen::doStatus()
+void TScreen::userStatus()
 {
-  dbgprintln("doStatus");
-  EStatus.TrigOff();
+  dbgprintln("userStatus");
+
   bool stori = myScreen.StatusBar->Status[2]->State;
   bool st = SD.exists("webradio.ini");
   myScreen.StatusBar->Status[2]->State = st;

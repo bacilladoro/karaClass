@@ -146,6 +146,19 @@ void TScreen::userBegin()
   Panels->Bts[3]->Button[0]->Caption = PSTR("Radio btn");
 }
 
+void TScreen::userStatus()
+{
+	//  dbgprintln("userStatus");
+	bool stori = myScreen.StatusBar->Status[2]->State;
+	bool st = !stori;
+	myScreen.StatusBar->Status[2]->State = st;
+	myScreen.StatusBar->Status[0]->Caption((char*)(st?"OK":"NOK"));
+	myScreen.StatusBar->Status[0]->Modified = true;
+	if (st != stori)
+	myScreen.StatusBar->Status[2]->Modified = true;
+
+	StatusBar->Refresh();
+}
 ////////////////////////////////////////////////////////////
 /*
  *   Action to be executed on touch button

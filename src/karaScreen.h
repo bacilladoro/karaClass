@@ -402,7 +402,8 @@ class TScreen :public ILI9341_due ,public TBase
 	void Welcome(void);                           // light init for welcome message
 	void Task(void);                              // things to do in the main loop. Compute touch, refresh childes etc...
 	void userTask(void);                          // things to do in the main loop. User part defined in main ino
-	void userSecond(void);
+	void userSecond(void);						  // things to do every second. User part called in ino
+	void userStatus(void);						  // things to do to compute the status.
 	void Draw(void);                              // Draw the all screen
 	uint16_t Color = ILI9341_DARKBLUE;            // default screen background color
 	String Keyboard(String banner, uint8_t set = KBMAJ);  // call a non blocking keyboard (Task() called inside)

@@ -955,20 +955,12 @@ void TScreen::doSecond(DateTime dtime)
 }
 
 // now defined in karaScreenConfig.h
-/*void TScreen::doStatus()
+void TScreen::doStatus()
 {
 	//  dbgprintln("doStatus");
 	EStatus.TrigOff();
-	bool stori = myScreen.StatusBar->Status[2]->State;
-	bool st = !stori;
-	myScreen.StatusBar->Status[2]->State = st;
-	myScreen.StatusBar->Status[0]->Caption((char*)(st?"OK":"NOK"));
-	myScreen.StatusBar->Status[0]->Modified = true;
-	if (st != stori)
-	myScreen.StatusBar->Status[2]->Modified = true;
-
-	StatusBar->Refresh();
-}*/
+    userStatus();
+}
 
 // Minimal init in order to display the welcome message
 // not mandatory
@@ -1004,15 +996,15 @@ void TScreen::Begin()
 void TScreen::Task()
 {
 	if (ETouch.isArmed())  // touch trigged in interrupt. Process it here in the main loop
-	Touch(ETouch.xt,ETouch.yt);
+	  Touch(ETouch.xt,ETouch.yt);
 	if (EunTouch.isArmed())
-	unTouch(EunTouch.xt,EunTouch.yt);
+	  unTouch(EunTouch.xt,EunTouch.yt);
 	if (ESlide.isArmed())
-	Slide(ESlide.xt,ESlide.yt);
+	  Slide(ESlide.xt,ESlide.yt);
 	if (ESecond.isArmed())
-	doSecond(DateTime (rtc.now()));;
+	  doSecond(DateTime (rtc.now()));;
 	if (EStatus.isArmed())
-	doStatus();
+	  doStatus();
 	
 	
 	// call the user processing
