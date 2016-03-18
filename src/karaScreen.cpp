@@ -984,11 +984,11 @@ void TScreen::Begin()
 	if (!welcome) Welcome();
 	// do not modify after
 	//Activate and display screen
+	userBegin();
 	// starts the interrupts
 	DueTimer::getAvailable().attachInterrupt(myTouchInt).start(TIMER1);  // for touch / untouch
 	DueTimer::getAvailable().attachInterrupt(StatInt).start(TIMER2);     // for status bar computing
 	DueTimer::getAvailable().attachInterrupt(TimeInt).start(TIMER3);;    // for user task and time task
-	userBegin();
 	Show();
 	Draw();
 }
