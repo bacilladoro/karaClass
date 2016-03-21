@@ -564,6 +564,7 @@ void TSlider::Slide(uint16_t xt, uint16_t yt)
   (value <= mini)? value = mini:value;
   (value >= maxi)? value = maxi:value;
   Update(val);
+  if (onSlide != NULL) onSlide();
 }
 // ------TPanel------------
 void TPanel::clearPanelLines()
@@ -587,6 +588,7 @@ void TPanel::Print(String str)
       Line[i-1] = Line[i];
     index--;
     Line[index] ="";   
+    Draw();
   }
   Line[index] = Line[index]+ str;
 //  Draw();  
@@ -603,7 +605,7 @@ void TPanel::Println(String str)
   }
   Line[index] += str;
   index++;
-  Draw();  
+  Draw();
 }
 void TPanel::Print(char* str){ Print((String) str);}
 
@@ -654,6 +656,7 @@ dbgprintln("startBigTime");
   {
     BigTime = new TBigTime(Parent);
     BigTime->Show();
+	Panel->Hide();
 //  Draw(); 
   } 
 }
@@ -666,6 +669,7 @@ dbgprintln("stopBigTime");
 	delete BigTime ;
 	BigTime = NULL;
   }
+  Panel->Show();
   Draw();
 }
 void TPanels::StartKeyboard(String banner, uint8_t set= KBMAJ)

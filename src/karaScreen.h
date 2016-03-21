@@ -266,11 +266,14 @@ class TSlider: public TBase
 	int  getMini(){return mini;}
 	void setMaxi(int max){ maxi = max; Draw();}
 	int  getMaxi(){return maxi;}
-	void setCenter(int centre){ center = centre; Draw();}
+	void setCenter(int centre){ center = centre;value=center; Draw();}
 	int  getCenter(){return center;}
-	void Touch(uint16_t xt, uint16_t yt){;}
-	void unTouch(uint16_t xt, uint16_t yt){;}
+	void Touch(uint16_t xt, uint16_t yt){if (onTouch != NULL) onTouch();}
+	void unTouch(uint16_t xt, uint16_t yt){if (onunTouch != NULL) onunTouch();}
 	void Slide(uint16_t xt, uint16_t yt);
+	void (*onSlide)(void) = NULL; 
+	void (*onTouch)(void) = NULL;
+	void (*onunTouch)(void) = NULL;
 	void Draw(void);
 	void Update(int val); //erase old val and update value;
 };
