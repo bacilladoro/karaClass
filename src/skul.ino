@@ -63,7 +63,11 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) ; // wait for Arduino Serial Monitor
   Serial.println(F("Skul")); 
-  rtc.begin(dt);  
+#ifdef DS3231
+rtc.begin();
+#else
+rtc.begin(dt);
+#endif
 
 ///////////////////////////////////////
 // MODIFY//////////////////////////////
@@ -91,6 +95,11 @@ void loop() {
 void TScreen::userTask()
 {
  ; 
+}
+
+// Called every 100 msecond. Put your code here
+void TScreen::user100msecond()
+{
 }
 // Called every second. Put your code here
 void TScreen::userSecond()

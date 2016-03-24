@@ -27,6 +27,11 @@
 #include "karawin.h"
 //END MODIFY//////////////////////
 
+#ifdef DS3231
+extern  RTC_DS3231 rtc;
+#else
+extern  RTC_Millis rtc;
+#endif
 
 // from main ino
 extern  TScreen  myScreen;
