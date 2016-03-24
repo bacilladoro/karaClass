@@ -1,9 +1,10 @@
 
+
 /* A demo of KaraClass library for arduino DUE board
  *  
  *  Copyright: Jean-Pierre Cocatrix jp@cocatrix.fr
  */
-
+ #include <Arduino.h>
 // library
 #include <ILI9341_due_config.h>
 #include <ILI9341_due.h>
@@ -15,9 +16,10 @@
 #include <karaScreen.h>
 #include "myArial14.h"
 #include "karaScreenConfig.h"
+#include <SdFat.h>
+#include <SFEMP3Shield.h>
 
-
-#ifdef __arm__
+/*#ifdef __arm__
 extern "C" char* sbrk(int incr);
 int FreeRam() {
   char top;
@@ -29,17 +31,18 @@ extern char __bss_end;
 /** Amount of free RAM
  * \return The number of free bytes.
  */
-int FreeRam() {
+/*int FreeRam() {
   char top;
   return __brkval ? &top - __brkval : &top - &__bss_end;
 }
 #endif  // __arm
+*/
 ///////////////////////////////////
 // hardware config:
 // For the TFT panel and associated touch panel, these are the default.
-#define TFT_RST 8
-#define TFT_DC 9
-#define TFT_CS 10
+#define TFT_RST 10
+#define TFT_DC 11
+#define TFT_CS 12
 #define TFTT_CLK 30
 #define TFTT_CS 28
 // touch screen
@@ -61,7 +64,11 @@ void setup() {
   Serial.begin(115200);
   while (!Serial) ; // wait for Arduino Serial Monitor
   Serial.println(F("Demo")); 
-  rtc.begin(dt);  
+#ifdef DS3231
+rtc.begin();
+#else
+rtc.begin(dt);
+#endif
 
 ///////////////////////////////////////
 // MODIFY//////////////////////////////
@@ -92,6 +99,12 @@ void TScreen::userTask()
 {
  ; 
 }
+
+// Called every 100 msecond. Put your code here
+void TScreen::user100msecond()
+{
+}
+
 // Called every second. Put your code here
 void TScreen::userSecond()
 {

@@ -60,7 +60,7 @@ TButton::TButton(ILI9341_due* parent,uint16_t left, uint16_t top, uint16_t width
 
 void TButton::Draw(void)
 {
- dbgprintln("TButton Draw");
+// dbgprintln("TButton Draw");
  uint16_t color = Color;
  if (!active) return;
  Parent->setFont(Arial_bold_14);
@@ -74,10 +74,10 @@ void TButton::Draw(void)
  Parent->setTextArea(Left,Top+PAD,Width,Height-(2*PAD));
  Parent->setTextColor(ILI9341_NAVY,Color);
 
- dbgprint("TButton Draw2 Logo= ");
+/* dbgprint("TButton Draw2 Logo= ");
  dbgprint((int)Logo);dbgprint("  LogoOn= ");
  dbgprintln((int)LogoOn);
-
+*/
  if ((Logo != NULL) || (LogoOn != NULL))
  {
     // replace white with current color
@@ -165,7 +165,8 @@ TBigTime::TBigTime(ILI9341_due* parent): Options(parent,2)
 void TBigTime::Draw()
 {
 //  dbgprintln("TBigTime draw");
-  char  ci[12] ;
+  char  ci[24] ,ct[8];
+  uint16_t atx;
   if (!active) return;
   if (!isDisplayed())
   {
@@ -185,8 +186,16 @@ void TBigTime::Draw()
 
   Parent->setFont(Arial_bold_14);
   sprintf(ci,"%02d/%02d/%04d", dt0.day(),dt0.month(),dt0.year()); 
-  Parent->fillRect  (WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 ),(HEIGHT/3) +50,Arial_bold_14[2]*(strlen(ci)+1),Arial_bold_14[3],color) ;
-  Parent->printAt(ci,WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 ),(HEIGHT/3) +50);
+  atx = WIDTH/2 -((Arial_bold_14[2]*strlen(ci))/2 );
+  Parent->fillRect  (atx,(HEIGHT/3) +50,Arial_bold_14[2]*(strlen(ci)+1),Arial_bold_14[3],color) ;
+  Parent->printAt(ci,atx,(HEIGHT/3) +50);
+
+  rtc.readTemperature(ct);
+  sprintf(ci,"%s Celsius",ct);
+  Parent->fillRect  (atx,(HEIGHT/3) +80,Arial_bold_14[2]*(strlen(ci)+1),Arial_bold_14[3],color) ;
+  Parent->printAt(ci,atx,(HEIGHT/3) +80);
+
+
   Parent->setTextColor(ILI9341_GRAY);
   if (!Options.isActive()) Parent->printAt("Set: touch here",4*WIDTH/8 ,(HEIGHT-30));
 }
@@ -662,15 +671,14 @@ dbgprintln("startBigTime");
 }
 void TPanels::StopBigTime()
 {
-dbgprintln("stopBigTime");
   if (BigTime!=NULL)
   { 
-    BigTime->Hide();
+    dbgprintln("stopBigTime");
 	delete BigTime ;
 	BigTime = NULL;
+    Panel->Show();
+    Draw();
   }
-  Panel->Show();
-  Draw();
 }
 void TPanels::StartKeyboard(String banner, uint8_t set= KBMAJ)
 {  
@@ -684,6 +692,7 @@ void TPanels::StartKeyboard(String banner, uint8_t set= KBMAJ)
 /*  for (uint16_t i = 0; i< MAXBTS; i++)
     if (Bts[i]!= NULL)
       Bts[i]->Hide();*/
+  Panel->Hide();
   Keyboard->Start(banner,set);
   Keyboard->Show();
   Keyboard->Draw();
@@ -695,8 +704,9 @@ String TPanels::GetKeyboard()
 String Caption = Keyboard->Caption;
    delete  Keyboard;
    Keyboard = NULL;
-  Draw();
-  return Caption;
+   Panel->Show();
+   Draw();
+   return Caption;
 }
 
 void TPanels::Touch(uint16_t xt, uint16_t yt)
@@ -937,6 +947,13 @@ void TScreen::Slide(uint16_t xt, uint16_t yt)
 	screensaver = 0; // activity so reset screensaver
 	Panels->Slide(xt,yt);
 }
+// called every 100 msecond. Add your own processing
+void TScreen::do100msecond()
+{
+   E100msecond.TrigOff();
+   user100msecond();
+}
+
 // called every second. Add your own processing
 void TScreen::doSecond(DateTime dtime)
 {
@@ -1007,6 +1024,8 @@ void TScreen::Task()
 	  Slide(ESlide.xt,ESlide.yt);
 	if (ESecond.isArmed())
 	  doSecond(DateTime (rtc.now()));;
+	if (E100msecond.isArmed())
+	do100msecond();;
 	if (EStatus.isArmed())
 	  doStatus();
 	
@@ -1053,6 +1072,7 @@ void myTouchInt()
 		inTouch = false;
 		myScreen.EunTouch.TrigOn(xt,yt);
 	}
+	myScreen.E100msecond.TrigOn();
 }
 // compute the status bar
 

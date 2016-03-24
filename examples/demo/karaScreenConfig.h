@@ -20,7 +20,11 @@
 #elif defined(ARDUINO_SAM_DUE)
     #define PROGMEM
 #endif
-
+#ifdef DS3231
+extern  RTC_DS3231 rtc;
+#else
+extern  RTC_Millis rtc;
+#endif
 //
 ///MODIFY/////////////////////////
 // Images for the demo
@@ -84,7 +88,7 @@ void TScreen::userBegin()
   StatusBar->Status[2]= new TStatus(this,"","DEMO",240);
   StatusBar->Status[3]= new TStatus(this," ","0",160);
 
-  Panels->Slider = new TSlider(this,-50,50,0);
+  Panels->Slider = new TSlider(this,-254,0,-50);
   Panels->Slider->Caption = "Slider for test";
   Panels->Slider->setTop(POSBTS2);
 

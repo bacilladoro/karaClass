@@ -34,8 +34,17 @@
 #include <RTClib.h>
 #include <UTouch.h>
 #include <DueTimer.h>
+
+// use DS3231 for rtc (real time clock) else software time
+#define DS3231
+
+#ifdef DS3231
+static RTC_DS3231 rtc;
+static DateTime dt( ); //
+#else
 static RTC_Millis rtc;
 static DateTime dt( F(__DATE__), F(__TIME__)); // init time with the compilation info
+#endif
 
 // some trace if DEBUG = 1 else 0
 #define DEBUG 1
@@ -111,7 +120,7 @@ static DateTime dt( F(__DATE__), F(__TIME__)); // init time with the compilation
 // Nb max of status in a status bar
 #define MAXSTATUS 4
 // Delay before screensaver (second)
-#define TSCREENSAVER 60
+#define TSCREENSAVER  180
 //-------------------------------------------
 //An event class to execute some action asked from interrupt.
 // An interrupt must be as short as possible so one arms the event to do some action in the main loop.
@@ -396,6 +405,7 @@ class TScreen :public ILI9341_due ,public TBase
 	void unTouch(uint16_t xt, uint16_t yt);       //compute an untouch event
 	void Slide(uint16_t xt, uint16_t yt);         //compute Slide  event
 	void doSecond(DateTime dtime);
+	void do100msecond();
 	void doStatus();
 	void userBegin(void);                             // init me please
 
@@ -406,6 +416,7 @@ class TScreen :public ILI9341_due ,public TBase
 	void Task(void);                              // things to do in the main loop. Compute touch, refresh childes etc...
 	void userTask(void);                          // things to do in the main loop. User part defined in main ino
 	void userSecond(void);						  // things to do every second. User part called in ino
+	void user100msecond(void);					  // things to do every 100 msecond. User part called in ino
 	void userStatus(void);						  // things to do to compute the status.
 	void Draw(void);                              // Draw the all screen
 	uint16_t Color = ILI9341_DARKBLUE;            // default screen background color
@@ -419,6 +430,7 @@ class TScreen :public ILI9341_due ,public TBase
 	TEventScreen EunTouch;// ''
 	TEventScreen ESlide;// ''
 	TEventScreen ESecond;  // internal event to do some action in a per second timer
+	TEventScreen E100msecond;  // internal event to do some action in a per second timer
 	TEventScreen EStatus;  // internal event to compute status
 	
 	/////MODIFY/////////////////////////////////////////////
